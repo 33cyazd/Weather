@@ -275,6 +275,13 @@
         .fallback-mark { color: #fd7e14 !important; font-size: 0.7rem; font-weight: 700; margin-right: 1px; vertical-align: super; }
 
         .new-day-row > td { border-top: 1.5px solid var(--text-black-80) !important; }
+        /* مستطیل اختلاف ۲۴ ساعته: هم‌اندازهٔ خود مقدار، با رنگ پس‌زمینهٔ قرمز/آبی.
+           انتخابگر بلندتر (.table td .d24.…) لازم است چون قاعدهٔ «.table td.temp-val *» رنگ را با !important روی همهٔ فرزندان می‌گذارد. */
+        .table td:has(.d24) { white-space: nowrap; }
+        .table td .d24 { display:inline-block; direction:ltr; font-size:1em; line-height:1.35; font-weight:700 !important; min-width:3.6em; text-align:center; margin-inline-start:7px; padding:1px 7px; border-radius:6px; background:#e6e6e6; }
+        .table td .d24.d24-up   { color:#9d0d1b !important; background:#f8c9cd; }
+        .table td .d24.d24-down { color:#0a3f8f !important; background:#c9defa; }
+        .table td .d24.d24-zero, .table td .d24.d24-na { color:#666 !important; background:#e6e6e6; }
 
         .footer { text-align: center; padding: 16px; color: var(--text-black) !important; font-size: 0.82rem; }
         .footer a { color: var(--text-black) !important; text-decoration: underline; }
@@ -333,60 +340,109 @@
                 <div class="col-md-3">
                     <label class="form-label"><span aria-hidden="true">📍</span> ایستگاه</label>
                     <select class="form-select" id="citySelect">
-                        <option value="31.9039,54.2897" selected>یزد</option>
-                        <option value="31.8000,54.1600">تفت</option>
-                        <option value="32.0000,53.5600">ندوشن</option>
-                        <option value="32.0000,54.1900">اشکذر</option>
-                        <option value="32.2800,54.2000">اردکان</option>
+                        <option value="31.9000,54.2900" selected>یزد</option>
+                        <option value="31.7500,54.1600">تفت</option>
+                        <option value="32.2200,53.5500">ندوشن</option>
+                        <option value="32.0100,54.1900">اشکذر</option>
+                        <option value="32.2900,54.0300">اردکان</option>
                         <option value="32.3444,54.6624">خرانق</option>
-                        <option value="32.2181,53.9836">میبد</option>
-                        <option value="31.0700,53.1700">ابرکوه</option>
-                        <option value="31.7287,54.1129">اسلامیه</option>
-                        <option value="31.5440,53.9179">بیداخوید</option>
-                        <option value="31.8833,53.9500">خضرآباد</option>
+                        <option value="32.2200,53.9800">میبد</option>
+                        <option value="31.1200,53.2300">ابرکوه</option>
+                        <option value="31.7300,54.1000">اسلامیه</option>
+                        <option value="31.5400,53.9200">بیداخوید</option>
+                        <option value="31.8800,53.9600">خضرآباد</option>
                         <option value="32.3906,53.4744">خلیل آباد</option>
                         <option value="32.1085,54.5442">دربید</option>
-                        <option value="31.5645,53.8455">دره زرشک</option>
+                        <option value="31.5600,53.8500">دره زرشک</option>
                         <option value="32.2531,53.6409">درین</option>
                         <option value="31.6019,54.1147">ده بالا</option>
-                        <option value="32.1516,53.4205">سورک</option>
-                        <option value="31.6774,53.6360">شواز</option>
+                        <option value="32.1500,53.4200">سورک ندوشن</option>
+                        <option value="31.6800,53.6400">شواز</option>
                         <option value="31.7277,54.0047">صادق آباد</option>
-                        <option value="31.9238,53.5844">صدرآباد</option>
-                        <option value="31.5988,54.1744">طرزجان</option>
-                        <option value="32.4450,53.6417">عقدا</option>
-                        <option value="31.6484,53.8272">علی آباد</option>
-                        <option value="31.7600,53.8600">نصرآباد</option>
-                        <option value="31.4667,54.0944">نیر</option>
-                        <option value="32.5030,53.8680">چاه افضل</option>
-                        <option value="31.3900,53.9100">کهدوئیه</option>
-                        <option value="31.3106,54.0972">گاریز</option>
+                        <option value="31.9200,53.5800">صدرآباد ندوشن</option>
+                        <option value="31.6000,54.1700">طرزجان</option>
+                        <option value="32.4400,53.6400">عقدا</option>
+                        <option value="31.6500,53.8300">علی آباد</option>
+                        <option value="31.7600,53.8500">نصرآباد</option>
+                        <option value="31.4800,54.0900">نیر</option>
+                        <option value="32.5000,53.8700">چاه افضل</option>
+                        <option value="31.4000,53.9200">کهدوئیه</option>
+                        <option value="31.3100,54.1000">گاریز</option>
                         <option value="31.5934,53.9119">گردنه بیداخوید</option>
                         <option value="31.6018,53.8336">گردنه علی آباد</option>
                         <option value="31.5483,54.0387">گردنه پست اسکی سخوید</option>
-                        <option value="30.9444,53.4167">اسفند آباد ابرکوه</option>
+                        <option value="30.9300,53.4300">اسفند آباد ابرکوه</option>
                         <option value="32.0870,53.8250">اشنیز</option>
-                        <option value="31.6289,55.4208">بافق</option>
+                        <option value="31.6300,55.4200">بافق</option>
                         <option value="31.8411,56.0461">بهاباد</option>
-                        <option value="31.3200,54.9100">بهادران</option>
-                        <option value="31.3987,54.3226">تنگ چنار</option>
+                        <option value="31.3200,54.9200">بهادران</option>
+                        <option value="31.4000,54.3200">تنگ چنار</option>
                         <option value="32.3100,55.5200">چادرملو</option>
-                        <option value="29.7810,54.3161">چاهک</option>
+                        <option value="29.7900,54.3200">چاهک</option>
                         <option value="31.5947,56.1019">خوسف</option>
-                        <option value="33.0117,55.5583">رباط پشت بادام</option>
+                        <option value="33.0100,55.5600">رباط پشت بادام</option>
                         <option value="32.5550,55.2526">ساغند</option>
-                        <option value="31.5300,55.9200">سبزدشت</option>
-                        <option value="30.4630,54.2110">مروست</option>
-                        <option value="31.5260,54.2110">منشاد</option>
-                        <option value="31.5931,54.4367">مهریز</option>
-                        <option value="30.0222,54.3836">هرات</option>
-                        <option value="30.1386,53.9892">کرخنگان</option>
+                        <option value="31.5400,55.9100">سبزدشت</option>
+                        <option value="30.4600,54.2100">مروست</option>
+                        <option value="31.5400,54.2100">منشاد</option>
+                        <option value="31.5900,54.4400">مهریز</option>
+                        <option value="30.0200,54.3800">هرات</option>
+                        <option value="30.1400,53.9700">کرخنگان</option>
                         <option value="32.3567,53.9919">احمدآباد</option>
                         <option value="31.8282,54.3788">حمیدیا</option>
                         <option value="31.0228,53.3564">مهردشت</option>
                         <option value="31.9454,54.2460">شاهدیه</option>
-                        <option value="31.9862,54.2249">زارچ</option>
+                        <option value="31.9800,54.2600">زارچ</option>
                         <option value="32.2699,53.9883">بافرویه</option>
+                        <option value="33.0800,54.8600">حاجی آباد زرین</option>
+                        <option value="32.6000,55.1900">مغستان اکبر</option>
+                        <option value="32.5800,54.5600">مزرعه میرها</option>
+                        <option value="32.4000,53.4900">مزرعه نو</option>
+                        <option value="32.3400,54.6100">مزرعه آقا</option>
+                        <option value="32.3300,53.3700">سروعلیا</option>
+                        <option value="32.3100,53.6700">فخرآباد عقدا</option>
+                        <option value="32.0900,53.8200">اشنیز بالا</option>
+                        <option value="32.1000,54.1100">شمسی رستاق</option>
+                        <option value="31.8200,54.0800">قوام آباد</option>
+                        <option value="31.9100,53.8000">خمسیان</option>
+                        <option value="31.9100,54.3800">آبشور</option>
+                        <option value="31.8700,53.8700">کذاب</option>
+                        <option value="31.8600,54.3500">راه آهن یزد</option>
+                        <option value="31.8500,54.3900">مهدی آباد</option>
+                        <option value="31.8600,55.8200">پرک</option>
+                        <option value="31.8500,53.8800">هامانه</option>
+                        <option value="31.8100,53.7600">خودسفلی</option>
+                        <option value="31.8000,54.5100">خویدک</option>
+                        <option value="31.7700,54.4200">محمدآباد</option>
+                        <option value="31.7700,55.9800">همیجان</option>
+                        <option value="31.7400,55.7900">کوشک</option>
+                        <option value="31.6700,56.0900">ببروئیه</option>
+                        <option value="31.6800,56.2100">آسفیج</option>
+                        <option value="31.6500,54.0100">دره شیر</option>
+                        <option value="31.6300,54.1300">توده ده بالا</option>
+                        <option value="31.6000,54.5200">سریزد</option>
+                        <option value="31.5800,54.0200">سلطانب</option>
+                        <option value="31.6000,54.1100">آمحسن ده بالا</option>
+                        <option value="31.5500,53.7800">دستجرد</option>
+                        <option value="31.5600,54.2000">بنادک سادات</option>
+                        <option value="31.5600,54.2500">گل افشان</option>
+                        <option value="31.5100,53.8500">باز</option>
+                        <option value="31.5100,54.0600">سخوید</option>
+                        <option value="31.5100,54.7900">گردکوه</option>
+                        <option value="31.4700,53.9700">بنادکوک دیزه</option>
+                        <option value="31.4500,53.7500">دهشیر</option>
+                        <option value="31.4600,55.8800">باجگان</option>
+                        <option value="31.4400,54.2300">زردین</option>
+                        <option value="31.4200,55.8000">قطروم</option>
+                        <option value="31.3200,54.1700">سروارنان</option>
+                        <option value="31.2900,54.2700">علی آباد چهل گزی</option>
+                        <option value="31.1800,53.3600">فیض آباد ابرکوه</option>
+                        <option value="31.0500,53.0300">فراغه</option>
+                        <option value="31.0200,53.3500">مهرآباد</option>
+                        <option value="30.2800,53.9900">توتک</option>
+                        <option value="30.0900,54.0000">چنارناز</option>
+                        <option value="29.7500,54.2000">بختیاری</option>
+                        <option value="31.8400,54.0500">بهاباد یزد</option>
 
                     </select>
                     <div id="cityMeta" class="muted-note" style="font-size:.78rem; margin-top:4px;"></div>
@@ -499,6 +555,8 @@
                 </div>
 
                 <div class="tab-pane fade" id="hourlyPane" role="tabpanel" aria-labelledby="hourly-tab-btn">
+                    <div class="info-note"><b>اختلاف ۲۴ ساعته:</b> عدد کوچک کنار هر مقدار = مقدار همین ساعت منهای مقدار همین ساعت در ۲۴ ساعت قبل
+                        (قرمز = گرم‌تر/بالاتر، آبی = سردتر/پایین‌تر). مثال: ۴۶٫۹° با ۳۹٫۸° در ۲۴ ساعت قبل ⇒ ‎+7.1. با نگه‌داشتن ماوس، مقدار ۲۴ ساعت قبل دیده می‌شود.</div>
                     <div class="table-container">
                         <table class="table table-bordered" id="hourlyTable">
                             <thead id="hourlyTableHead"></thead>
@@ -562,18 +620,24 @@ document.addEventListener('DOMContentLoaded', function () {
         const apiSet = isLimitedModel(model) ? ['temperature_2m'] : ALL_PARAMS;
         const forecastDays = forecastDaysFor(model);
         const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}` +
-                    `&hourly=${apiSet.join(',')}&models=${model}&timezone=auto&forecast_days=${forecastDays}`;
+                    `&hourly=${apiSet.join(',')}&models=${model}&timezone=auto&forecast_days=${forecastDays}&past_days=1`;
 
         const p = fetchJson(url, 20000).then(data => {
             if (data.error) throw new Error(data.reason || 'API error');
             const hourly = data.hourly;
             if (!hourly || !hourly.time) throw new Error('داده ساعتی در پاسخ نیست.');
-            const hourlyRows = hourly.time.map((t, i) => {
+            const allRows = hourly.time.map((t, i) => {
                 const obj = { time: t };
                 apiSet.forEach(p2 => { obj[p2] = hourly[p2] ? hourly[p2][i] : null; });
                 return obj;
             });
-            const entry = { hourlyRows, forecastDays };
+            // past_days=1 فقط برای محاسبهٔ «اختلاف ۲۴ ساعته» است؛ ردیف‌های دیروز جدا نگه داشته می‌شوند
+            // تا جدول‌های روزانه/ساعتی و پنجره‌ها همان ۱۵ روز قبلی را ببینند.
+            let prevCount = allRows.length - 24 * forecastDays;
+            if (prevCount < 0 || prevCount > 24) prevCount = 0;
+            const prevRows = allRows.slice(0, prevCount);
+            const hourlyRows = allRows.slice(prevCount);
+            const entry = { hourlyRows, prevRows, forecastDays };
             dataCache.set(key, entry);
             // ارتفاع دقیقاً از همون پاسخ Open-Meteo گرفته می‌شه (نه هیچ منبع دیگه‌ای)
             // تا برای همهٔ ایستگاه‌ها هماهنگ باشه و در فرمول‌های آینده اختلاف ایجاد نکنه.
@@ -726,7 +790,20 @@ document.addEventListener('DOMContentLoaded', function () {
         return Array.from(paramChecks).filter(cb => cb.checked).map(cb => cb.value);
     }
 
-    function renderHourlyTable(data, hourlyParams) {
+    // کلید همین ساعتِ ۲۴ ساعت قبل (بدون وابستگی به منطقهٔ زمانی مرورگر/DST)
+    function prevDayKey(t) {
+        const m = /^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2})/.exec(t);
+        if (!m) return null;
+        const ms = Date.UTC(+m[1], +m[2] - 1, +m[3], +m[4], +m[5]) - 86400000;
+        return new Date(ms).toISOString().slice(0, 16);
+    }
+    function buildPrevMap(entry) {
+        const mp = new Map();
+        (entry.prevRows || []).concat(entry.hourlyRows).forEach(r => mp.set(r.time.slice(0, 16), r));
+        return mp;
+    }
+
+    function renderHourlyTable(data, hourlyParams, prevMap) {
         let headHtml = '<tr>';
         headHtml += '<th class="sticky-col sticky-1">تاریخ میلادی</th>';
         headHtml += '<th class="sticky-col sticky-2">تاریخ شمسی</th>';
@@ -758,7 +835,20 @@ document.addEventListener('DOMContentLoaded', function () {
                 const v = row[p];
                 const disp = (v !== null && v !== undefined && !isNaN(v))
                     ? v.toFixed(1) + '°' : '-';
-                bodyHtml += `<td class="${getParamClass(p)}">${disp}</td>`;
+                let diffHtml = '';
+                if (prevMap) {
+                    const pr = prevMap.get(prevDayKey(row.time));
+                    const pv = pr ? pr[p] : null;
+                    if (v !== null && v !== undefined && !isNaN(v) && pv !== null && pv !== undefined && !isNaN(pv)) {
+                        const d = Math.round((v - pv) * 10) / 10;
+                        const cls = d > 0 ? 'd24-up' : (d < 0 ? 'd24-down' : 'd24-zero');
+                        const txt = (d > 0 ? '+' : '') + d.toFixed(1);
+                        diffHtml = `<span class="d24 ${cls}" title="۲۴ ساعت قبل: ${pv.toFixed(1)}°">${txt}</span>`;
+                    } else {
+                        diffHtml = '<span class="d24 d24-na" title="داده ۲۴ ساعت قبل موجود نیست">—</span>';
+                    }
+                }
+                bodyHtml += `<td class="${getParamClass(p)}">${disp}${diffHtml}</td>`;
             });
             bodyHtml += '</tr>';
         });
@@ -867,7 +957,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     function renderFromEntry(entry, hourlyParams, additionalParams) {
-        renderHourlyTable(futureOnlyRows(entry.hourlyRows), hourlyParams);
+        renderHourlyTable(futureOnlyRows(entry.hourlyRows), hourlyParams, buildPrevMap(entry));
         const aggResult = aggregateDaily(entry.hourlyRows, hourlyParams, additionalParams);
         renderDailyTable(aggResult.data, hourlyParams, additionalParams);
         fallbackNote.style.display = aggResult.usedFallback ? 'block' : 'none';
