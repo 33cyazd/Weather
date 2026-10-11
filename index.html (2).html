@@ -1,0 +1,238 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>اوقات شرعی ۹۰ شهر ایران — آفلاین</title>
+<style>body{font-family:Tahoma,Arial,sans-serif;margin:10px;color:#111;background:#fff}h1{font-size:18px;margin:0 0 10px}label{font-size:12px}select,input,button{font:inherit;margin:3px;padding:4px}button{cursor:pointer}.controls{margin:8px 0}.checks{margin:8px 0}.checks label{margin-left:10px}table{border-collapse:collapse;width:100%;font-size:12px}th,td{border:1px solid #999;padding:4px;text-align:center}th{background:#eee}.note{font-size:11px;color:#555}.hide{display:none}@media print{.no-print{display:none!important}body{margin:5mm}table{font-size:9px}}</style>
+</head>
+<body>
+<header class="no-print">
+  <h1>اوقات شرعی ۹۰ شهر پرجمعیت ایران — محاسبه کاملاً آفلاین</h1>
+  <p>همه محاسبات در همین فایل و داخل مرورگر انجام می‌شود؛ برای محاسبه معمول و نمایش داده‌ها اینترنت لازم نیست.</p>
+</header>
+<div>
+<section class="no-print">
+ <div class="grid">
+  <div><label>شهر</label><select id="city"></select></div>
+  <div><label>از تاریخ میلادی</label><input id="from" type="date"></div>
+  <div><label>تا تاریخ میلادی</label><input id="to" type="date"></div>
+  <div><label>منطقه زمانی</label>
+   <select id="tz">
+    <option value="3.5">UTC+03:30 — ایران</option>
+    <option value="4">UTC+04:00</option><option value="3">UTC+03:00</option>
+    <option value="2">UTC+02:00</option><option value="4.5">UTC+04:30</option>
+    <option value="5">UTC+05:00</option><option value="0">UTC+00:00</option>
+   </select>
+  </div>
+  <div><label>روش محاسبه</label>
+   <select id="method">
+    <option value="tehran">موسسه ژئوفیزیک دانشگاه تهران — Fajr 17.7° / Isha 14°</option>
+    <option value="custom">سفارشی</option>
+   </select>
+  </div>
+  <div><label>تعدیل مغرب نسبت به غروب (دقیقه)</label><input id="magAdj" type="number" value="0" step="1"></div>
+  <div><label>تعدیل اذان صبح (دقیقه)</label><input id="fajrAdj" type="number" value="0" step="1"></div>
+  <div><label>تعدیل اذان ظهر (دقیقه)</label><input id="dhuhrAdj" type="number" value="0" step="1"></div>
+  <div><label>تعدیل اذان مغرب (دقیقه)</label><input id="ishaAdj" type="number" value="0" step="1"></div>
+ </div>
+ <div id="customBox" style="display:none;margin-top:10px" class="grid">
+   <div><label>زاویه فجر</label><input id="fajrAngle" type="number" value="17.7" step="0.1"></div>
+   <div><label>زاویه عشاء</label><input id="ishaAngle" type="number" value="14" step="0.1"></div>
+ </div>
+ <div class="checks">
+  <label><input type="checkbox" data-col="fajr" checked> اذان صبح</label>
+  <label><input type="checkbox" data-col="sunrise" checked> طلوع آفتاب</label>
+  <label><input type="checkbox" data-col="dhuhr" checked> اذان ظهر</label>
+  <label><input type="checkbox" data-col="sunset" checked> غروب خورشید</label>
+  <label><input type="checkbox" data-col="maghrib" checked> اذان مغرب</label>
+  <label><input type="checkbox" data-col="midnight" checked> نیمه‌شب شرعی</label>
+ </div>
+ <div class="controls" style="margin-top:10px">
+  <button id="calc">محاسبه / به‌روزرسانی</button>
+  <button id="pdf" class="green">چاپ / ذخیره PDF</button>
+  <button id="csv" class="secondary">خروجی CSV</button>
+ </div>
+ <div class="note">
+   برای PDF، دکمه «چاپ / ذخیره PDF» را بزنید و در پنجره چاپ مرورگر گزینه Save as PDF را انتخاب کنید.
+   چون PDF از چاپ داخلی مرورگر ساخته می‌شود، فایل اصلی همچنان کاملاً آفلاین است.
+ </div>
+</section>
+
+<section>
+ <div class="titleline">
+   <div><strong id="reportTitle">—</strong><div class="note" id="reportSub"></div></div>
+   <span class="badge" id="count">۰ ردیف</span>
+ </div>
+ <div class="tablewrap">
+  <table id="tbl"><thead><tr id="thead"></tr></thead><tbody id="tbody"></tbody></table>
+ </div>
+</section>
+<footer class="no-print">
+  روش پایه این فایل بر محاسبه نجومی خورشید است. فجر با زاویه ۱۷٫۷ درجه، مغرب با زاویه ۴٫۵ درجه در حالت پیش‌فرض، ظهر با عبور خورشید از نصف‌النهار، طلوع/غروب با ارتفاع تقریبی ۰٫۸۳۳- درجه و نیمه‌شب شرعی با نقطه میانی «غروب امروز تا طلوع فردا» محاسبه می‌شود.
+  اختلاف چند دقیقه‌ای با تقویم رسمی یا مسجد محلی ممکن است به علت روش محاسبه، تعدیل‌های محلی، ارتفاع و تعریف اذان رخ دهد.
+</footer>
+</div>
+
+<script>
+const cities = [
+["تهران",35.6892,51.3890],["مشهد",36.2605,59.6168],["اصفهان",32.6539,51.6660],["شیراز",29.5918,52.5837],["تبریز",38.0962,46.2738],
+["کرج",35.8400,50.9391],["اهواز",31.3183,48.6706],["قم",34.6416,50.8746],["کرمان",30.2839,57.0834],["رشت",37.2808,49.5832],
+["ارومیه",37.5527,45.0761],["زاهدان",29.4963,60.8629],["همدان",34.7981,48.5146],["یزد",31.8972,54.3675],["اردبیل",38.2498,48.2933],
+["کرمانشاه",34.3142,47.0650],["بندرعباس",27.1832,56.2666],["اراک",34.0917,49.6892],["قزوین",36.2688,50.0041],["زنجان",36.6736,48.4787],
+["خرم‌آباد",33.4878,48.3558],["ساری",36.5659,53.0586],["گرگان",36.8456,54.4393],["سنندج",35.3219,46.9862],["بوشهر",28.9234,50.8203],
+["بیرجند",32.8663,59.2211],["اسلامشهر",35.5440,51.2303],["نجف‌آباد",32.6344,51.3668],["کاشان",33.9850,51.4090],["بابل",36.5387,52.6789],
+["آمل",36.4696,52.3507],["قائم‌شهر",36.4640,52.6780],["دزفول",32.3831,48.4236],["بندر ماهشهر",30.5580,49.1980],["آبادان",30.3473,48.2934],
+["خرمشهر",30.4256,48.1891],["سبزوار",36.2126,57.6819],["نیشابور",36.2141,58.7961],["سمنان",35.5729,53.3971],["شاهرود",36.4182,54.9763],
+["گرمسار",35.2182,52.3400],["ورامین",35.3252,51.6458],["پاکدشت",35.4783,51.6839],["شهرری",35.6000,51.4400],["شهریار",35.6590,51.0590],
+["قدس",35.7260,51.1080],["رباط‌کریم",35.4846,51.0829],["ساوه",35.0213,50.3566],["خمین",33.6406,50.0785],["محلات",33.9086,50.4500],
+["بروجرد",33.8973,48.7516],["دورود",33.4910,49.0630],["الیگودرز",33.4006,49.6950],["مهاباد",36.7631,45.7222],["خوی",38.5503,44.9521],
+["مراغه",37.3890,46.2999],["مرند",38.4320,45.7740],["میاندوآب",36.9690,46.1020],["بناب",37.3404,46.0561],["بستان‌آباد",37.8500,46.8330],
+["آستارا",38.4291,48.8720],["لاهیجان",37.2072,50.0039],["انزلی",37.4727,49.4592],["رودسر",37.1376,50.2876],["تالش",37.8000,48.9060],
+["نکا",36.6500,53.2990],["تنکابن",36.8163,50.8738],["چالوس",36.6550,51.4200],["نوشهر",36.6480,51.4960],["گرمسار",35.2182,52.3400],
+["کاشمر",35.2380,58.4656],["تربت حیدریه",35.2740,59.2195],["تربت جام",35.2440,60.6225],["قوچان",37.1060,58.5095],["تایباد",34.7400,60.7756],
+["رفسنجان",30.4067,55.9939],["سیرجان",29.4514,55.6809],["جیرفت",28.6740,57.7999],["بم",29.1060,58.3569],["زرند",30.8127,56.5630],
+["بافق",31.6035,55.4025],["میبد",32.2500,54.0167],["اردکان",32.3100,54.0175],["ابرکوه",31.1304,53.2824],["طبس",33.5959,56.9240],
+["ایلام",33.6374,46.4227],["دهلران",32.6940,47.2679],["مراغه",37.3890,46.2999],["بانه",35.9975,45.8853],["مریوان",35.5217,46.1760],
+["سقز",36.2466,46.2666],["قروه",35.1664,47.8040],["کنگان",27.8999,52.0640],["لار",27.6708,54.3400],["فسا",28.9383,53.6482]
+];
+// حذف تکراری و محدود به 90 شهر
+const unique=[]; const seen=new Set();
+cities.forEach(c=>{if(!seen.has(c[0])){seen.add(c[0]);unique.push(c)}});
+
+const cityEl=document.getElementById("city");
+unique.slice(0,90).forEach((c,i)=>{let o=document.createElement("option");o.value=i;o.textContent=c[0];cityEl.appendChild(o)});
+const today=new Date(); const iso=d=>d.toISOString().slice(0,10);
+document.getElementById("from").value=iso(today);
+document.getElementById("to").value=iso(today);
+
+document.getElementById("method").onchange=e=>{
+ document.getElementById("customBox").style.display=e.target.value==="custom"?"grid":"none";
+};
+
+function d2r(x){return x*Math.PI/180} function r2d(x){return x*180/Math.PI}
+function fix360(x){x%=360;return x<0?x+360:x}
+function fix24(x){x%=24;return x<0?x+24:x}
+function julian(y,m,d){
+ if(m<=2){y--;m+=12}
+ let A=Math.floor(y/100),B=2-A+Math.floor(A/4);
+ return Math.floor(365.25*(y+4716))+Math.floor(30.6001*(m+1))+d+B-1524.5;
+}
+function sun(jd){
+ const T=(jd-2451545.0)/36525;
+ let L=fix360(280.46646+T*(36000.76983+T*0.0003032));
+ let M=fix360(357.52911+T*(35999.05029-0.0001537*T));
+ let e=0.016708634-T*(0.000042037+0.0000001267*T);
+ let C=(1.914602-T*(0.004817+0.000014*T))*Math.sin(d2r(M))
+ +(0.019993-0.000101*T)*Math.sin(d2r(2*M))
+ +0.000289*Math.sin(d2r(3*M));
+ let trueLong=L+C;
+ let omega=125.04-1934.136*T;
+ let lambda=trueLong-0.00569-0.00478*Math.sin(d2r(omega));
+ let eps0=23+(26+(21.448-T*(46.815+T*(0.00059-T*0.001813)))/60)/60;
+ let eps=eps0+0.00256*Math.cos(d2r(omega));
+ let decl=r2d(Math.asin(Math.sin(d2r(eps))*Math.sin(d2r(lambda))));
+ let y=Math.tan(d2r(eps/2)); y*=y;
+ let eq=4*r2d(y*Math.sin(2*d2r(L))-2*e*Math.sin(d2r(M))
+ +4*e*y*Math.sin(d2r(M))*Math.cos(2*d2r(L))
+ -0.5*y*y*Math.sin(4*d2r(L))-1.25*e*e*Math.sin(2*d2r(M)));
+ return {decl,eq};
+}
+// depression = degrees the Sun is below the horizon.
+// 0.833° is the standard apparent sunrise/sunset correction.
+function solarEvent(date,lat,lon,depression){
+ const [y,m,d]=date.split("-").map(Number);
+ const jd=julian(y,m,d); const s=sun(jd);
+ const noon=720-4*lon-s.eq;
+ const zenith=90+Number(depression);
+ const den=Math.cos(d2r(lat))*Math.cos(d2r(s.decl));
+ if(Math.abs(den)<1e-12)return null;
+ const cosH=(Math.cos(d2r(zenith))
+   -Math.sin(d2r(lat))*Math.sin(d2r(s.decl)))/den;
+ if(cosH>1||cosH<-1)return null;
+ const H=r2d(Math.acos(cosH));
+ return {rise:(noon-H*4)/60,set:(noon+H*4)/60,noon:noon/60};
+}
+function fmt(hours){
+ if(hours==null||!isFinite(hours))return "—";
+ let total=Math.round(hours*3600);
+ total=((total%86400)+86400)%86400;
+ let h=Math.floor(total/3600),m=Math.floor((total%3600)/60),sec=total%60;
+ return String(h).padStart(2,"0")+":"+String(m).padStart(2,"0")+":"+String(sec).padStart(2,"0");
+}
+function jalali(gy,gm,gd){
+ // compact Gregorian -> Jalali conversion
+ const gdm=[0,31,59,90,120,151,181,212,243,273,304,334];
+ let gy2=gm>2?gy+1:gy, days=355666+365*gy+Math.floor((gy2+3)/4)-Math.floor((gy2+99)/100)+Math.floor((gy2+399)/400)+gd+gdm[gm-1];
+ let jy=-1595+33*Math.floor(days/12053); days%=12053; jy+=4*Math.floor(days/1461); days%=1461;
+ if(days>365){jy+=Math.floor((days-1)/365);days=(days-1)%365}
+ let jm=days<186?1+Math.floor(days/31):7+Math.floor((days-186)/30), jd=1+(days<186?days%31:(days-186)%30);
+ return jy+"/"+String(jm).padStart(2,"0")+"/"+String(jd).padStart(2,"0");
+}
+function calcRow(date,lat,lon){
+ const prev=new Date(date+"T00:00:00"); const next=new Date(prev); next.setDate(next.getDate()+1); const nd=iso(next);
+ const s=sun(julian(...date.split("-").map(Number)));
+ const base=solarEvent(date,lat,lon,0.833);
+ const tomorrow=solarEvent(nd,lat,lon,0.833);
+ const fa=+document.getElementById("fajrAngle").value||17.7;
+ const ia=+document.getElementById("ishaAngle").value||14;
+ const fg=solarEvent(date,lat,lon,fa);
+ const is=solarEvent(date,lat,lon,ia);
+ const offset=+document.getElementById("tz").value;
+ const magAngle = 4.5; // Iranian-style common approximation for Maghrib
+ const mg = solarEvent(date,lat,lon,magAngle);
+
+ // solarEvent returns UTC clock hours; NOAA's equation gives UTC minutes.
+ // Convert UTC -> civil clock time by adding ONLY the timezone offset.
+ // Longitude must NOT be added here; it is already included in the solar-noon equation.
+ function civil(t){return t==null?null:t+offset}
+ let fajr=civil(fg?.rise), sunrise=civil(base?.rise), dhuhr=civil(base?.noon);
+ let sunset=civil(base?.set), maghrib=civil(mg?.set);
+ if(fajr!=null)fajr+=(+document.getElementById("fajrAdj").value||0)/60;
+ if(fajr!=null && sunrise!=null && fajr>=sunrise) fajr=null;
+ if(dhuhr!=null)dhuhr+=(+document.getElementById("dhuhrAdj").value||0)/60;
+ if(maghrib!=null)maghrib+=(+document.getElementById("magAdj").value||0)/60;
+
+ let nextSunrise=civil(tomorrow?.rise);
+ // شرعی نیمه‌شب = midpoint between today's sunset and tomorrow's sunrise.
+ let midnight=(sunset!=null&&nextSunrise!=null)
+   ? sunset + (((nextSunrise-sunset+24)%24)/2) : null;
+ return {date,jalali:jalali(...date.split("-").map(Number)),fajr,sunrise,dhuhr,sunset,maghrib,midnight};
+}
+function getDates(a,b){
+ let arr=[],d=new Date(a+"T00:00:00"),end=new Date(b+"T00:00:00");
+ if(end<d)[d,end]=[end,d];
+ let guard=0; while(d<=end&&guard++<999){arr.push(iso(d));d.setDate(d.getDate()+1)} return arr;
+}
+const cols=[
+ ["fajr","اذان صبح"],["sunrise","طلوع آفتاب"],["dhuhr","اذان ظهر"],["sunset","غروب خورشید"],["maghrib","اذان مغرب"],["midnight","نیمه‌شب شرعی"]
+];
+function render(){
+ const c=unique[+cityEl.value], from=document.getElementById("from").value,to=document.getElementById("to").value;
+ if(!from||!to)return;
+ const enabled={}; document.querySelectorAll(".checks input").forEach(x=>enabled[x.dataset.col]=x.checked);
+ const tr=document.getElementById("thead"); tr.innerHTML="<th>ردیف</th><th>تاریخ</th><th>تاریخ شمسی</th>"+cols.filter(x=>enabled[x[0]]).map(x=>"<th>"+x[1]+"</th>").join("");
+ const tb=document.getElementById("tbody");tb.innerHTML="";
+ const dates=getDates(from,to);
+ dates.forEach((d,i)=>{
+  const r=calcRow(d,c[1],c[2]); let tr=document.createElement("tr");
+  tr.innerHTML="<td>"+(i+1)+"</td><td>"+d+"</td><td>"+r.jalali+"</td>"+cols.filter(x=>enabled[x[0]]).map(x=>"<td>"+fmt(r[x[0]])+"</td>").join("");
+  tb.appendChild(tr);
+ });
+ document.getElementById("reportTitle").textContent="اوقات شرعی "+c[0];
+ document.getElementById("reportSub").textContent="مختصات: "+c[1].toFixed(4)+" , "+c[2].toFixed(4)+" | UTC"+(+document.getElementById("tz").value>=0?"+":"")+document.getElementById("tz").value+" | بازه: "+from+" تا "+to;
+ document.getElementById("count").textContent=dates.length+" ردیف";
+}
+document.getElementById("calc").onclick=render;
+document.querySelectorAll(".checks input").forEach(x=>x.onchange=render);
+document.getElementById("pdf").onclick=()=>window.print();
+document.getElementById("csv").onclick=()=>{
+ const rows=[...document.querySelectorAll("#tbl tr")].map(tr=>[...tr.children].map(td=>td.innerText));
+ const csv="\ufeff"+rows.map(r=>r.map(v=>'"'+v.replaceAll('"','""')+'"').join(",")).join("\r\n");
+ const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([csv],{type:"text/csv;charset=utf-8"}));
+ a.download="prayer-times.csv";a.click();URL.revokeObjectURL(a.href);
+};
+render();
+</script>
+</body>
+</html>
