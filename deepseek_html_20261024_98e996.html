@@ -182,10 +182,12 @@
 /* ==========================================================
    API و پروکسی‌ها (به‌روزرسانی‌شده با Cloudflare Worker)
    ========================================================== */
-const API_ORIGIN = "https://irimo-proxy.33c-yazd.workers.dev";
+const API_ORIGIN = "https://webapp.irimo.ir/metapi/msglist.php";
 
 const PROXIES = [
-  { name: "my-worker", build: u => u } // فقط از Worker خودمان استفاده می‌کند
+  { name: "allorigins", build: u => "https://api.allorigins.win/raw?url=" + encodeURIComponent(u) },
+  { name: "corsproxy", build: u => "https://corsproxy.io/?url=" + encodeURIComponent(u) },
+  { name: "codetabs", build: u => "https://api.codetabs.com/v1/proxy?quest=" + encodeURIComponent(u) }
 ];
 
 let rawData = [];
