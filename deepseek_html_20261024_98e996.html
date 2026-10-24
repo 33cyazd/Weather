@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>جدول هواشناسی — تم سیاه + دانلود خودکار</title>
+<style>
+  * { box-sizing: border-box; }
+  html, body { height: 100%; }
+  body {
+    font-family: Tahoma, "Vazirmatn", sans-serif;
+    background: #0f1115; color: #e6e8ee;
+    margin: 0; padding: 20px; min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+  }
+  h1 { font-size: 18px; margin: 0 0 6px; color: #9fb8ff; }
+  .sub { font-size: 12px; color: #7d8598; margin-bottom: 14px; }
+  .sub code { background: #1a1e28; padding: 2px 6px; border-radius: 4px; color: #b8c4e0; }
+
+  .toolbar { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 12px; align-items: center; }
+  .toolbar input[type="search"] {
+    padding: 9px 12px; border: 1px solid #2a3040; border-radius: 8px;
+    min-width: 220px; font-family: inherit;
+    background: #161b24; color: #e6e8ee;
+  }
+  .toolbar input[type="search"]:focus {
+    outline: none; border-color: #4a6bbf;
+    box-shadow: 0 0 0 3px rgba(74,107,191,.15);
+  }
+  .toolbar input::placeholder { color: #5c6579; }
+  .toolbar button {
+    padding: 9px 14px; border: none; border-radius: 8px;
+    background: #2f4a8a; color: #fff; cursor: pointer;
+    font-family: inherit; font-size: 13px;
+    transition: background .15s, opacity .15s;
+  }
+  .toolbar button:hover { background: #3d5ba8; }
+  .toolbar button.secondary { background: #232a38; color: #c8d2e6; }
+  .toolbar button.secondary:hover { background: #2e374a; }
+  .toolbar button:disabled { opacity: .5; cursor: wait; }
+
+  /* دکمهٔ سبز دانلود */
+  .toolbar button.download {
+    background: #1e6b3f; color: #fff;
+  }
+  .toolbar button.download:hover { background: #248049; }
+  .toolbar button.download:disabled { background: #1a3a24; }
+
+  .status {
+    font-size: 13px; padding: 10px 14px; border-radius: 8px;
+    margin-bottom: 12px; display: none; line-height: 1.7;
+  }
+  .status.info    { display: block; background: #16223a; color: #9fb8ff; border: 1px solid #22345a; }
+  .status.error   { display: block; background: #2a1418; color: #ff9a9a; border: 1px solid #4a1e24; }
+  .status.success { display: block; background: #14261a; color: #8fe0a3; border: 1px solid #1e4a2a; }
+  .status.warn    { display: block; background: #2a2010; color: #ffce7a; border: 1px solid #4a3a18; }
+
+  .cols-panel {
+    background: #161b24; border: 1px solid #2a3040; border-radius: 10px;
+    padding: 12px; margin-bottom: 14px; display: none;
+  }
+  .cols-panel.open { display: block; }
+  .cols-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 6px 14px;
+  }
+  .cols-grid label {
+    display: flex; align-items: center; gap: 6px;
+    font-size: 13px; cursor: pointer; padding: 3px 0; color: #b8c4e0;
+  }
+  .cols-grid label:hover { color: #9fb8ff; }
+  .cols-grid input[type=checkbox] { accent-color: #4a6bbf; width: 15px; height: 15px; cursor: pointer; }
+
+  .legend {
+    background: #161b24; border: 1px solid #2a3040; border-radius: 10px;
+    padding: 10px 14px; margin-bottom: 14px;
+    display: flex; flex-wrap: wrap; gap: 18px; align-items: center;
+    font-size: 12px; color: #b8c4e0;
+  }
+  .legend .group { display: flex; align-items: center; gap: 8px; }
+  .legend .bar {
+    width: 260px; height: 16px; border-radius: 8px;
+    border: 1px solid #2a3040;
+    background: linear-gradient(to left,
+      #d32f2f, #f57c00, #fbc02d, #388e3c, #1976d2, #283593, #4a148c);
+  }
+  .legend .min { color: #b39ddb; font-weight: 600; }
+  .legend .max { color: #ef5350; font-weight: 600; }
+
+  .table-wrap {
+    overflow: auto; max-height: 70vh;
+    border: 1px solid #2a3040; border-radius: 10px;
+    background: #131720;
+    scrollbar-color: #3a4358 #1a1f2a;
+    scrollbar-width: thin;
+  }
+  .table-wrap::-webkit-scrollbar { width: 10px; height: 10px; }
+  .table-wrap::-webkit-scrollbar-track { background: #1a1f2a; }
+  .table-wrap::-webkit-scrollbar-thumb { background: #3a4358; border-radius: 5px; }
+  .table-wrap::-webkit-scrollbar-thumb:hover { background: #4a5570; }
+
+  table { border-collapse: collapse; width: 100%; font-size: 13px; white-space: nowrap; }
+  thead th {
+    position: sticky; top: 0; z-index: 2;
+    background: #1c2230; color: #c8d2e6;
+    padding: 10px 12px; text-align: center;
+    font-weight: 600; cursor: pointer; user-select: none;
+    border-left: 1px solid #2a3040;
+    border-bottom: 2px solid #2f4a8a;
+  }
+  thead th:hover { background: #232b3d; }
+  thead th:first-child { border-left: none; }
+  thead th .arrow { font-size: 10px; margin-right: 4px; opacity: .5; }
+  thead th.sorted-asc .arrow,
+  thead th.sorted-desc .arrow { opacity: 1; color: #9fb8ff; }
+  thead th .range {
+    display: block; font-size: 10px; font-weight: 400;
+    opacity: .7; margin-top: 3px; color: #9fb8ff;
+  }
+
+  tbody td {
+    padding: 7px 12px; text-align: center;
+    border-bottom: 1px solid #1e2330;
+    border-left: 1px solid #1a1f2a;
+    color: #d4dae6;
+  }
+  tbody tr:nth-child(even) { background: #151a24; }
+  tbody tr:hover { background: #1e2636; }
+  tbody td.rtl { direction: rtl; text-align: right; }
+
+  .badge { display: inline-block; padding: 2px 8px; border-radius: 10px; font-size: 11px; }
+  .badge.yes { background: #1e4a2a; color: #8fe0a3; }
+  .badge.no  { background: #232a38; color: #7d8598; }
+  .num { font-variant-numeric: tabular-nums; }
+  .null { color: #4a5266; font-style: italic; }
+
+  .empty { padding: 30px; text-align: center; color: #5c6579; }
+  .count { font-size: 12px; color: #7d8598; margin-bottom: 8px; }
+</style>
+</head>
+<body>
+
+<h1>جدول داده‌های هواشناسی — تم سیاه</h1>
+<div class="sub">منبع: <code>webapp.irimo.ir/metapi/msglist.php</code></div>
+
+<div class="toolbar">
+  <input type="search" id="searchBox" placeholder="جستجو در همه ردیف‌ها…">
+  <button id="toggleCols">انتخاب ستون‌ها</button>
+  <button id="showAll">نمایش همه ستون‌ها</button>
+  <button id="reloadBtn" class="secondary">بارگذاری از API</button>
+  <button id="downloadBtn" class="download">⬇ دانلود خودکار JSON</button>
+  <button id="fileBtn" class="secondary">بارگذاری فایل JSON</button>
+  <input type="file" id="fileInput" accept=".json,application/json" hidden>
+</div>
+
+<div class="legend">
+  <div class="group">
+    <span class="min">حداقل</span>
+    <span class="bar"></span>
+    <span class="max">حداکثر</span>
+  </div>
+  <div>بازهٔ هر ستون خودکار از داده‌ها محاسبه می‌شود.</div>
+</div>
+
+<div class="status" id="status"></div>
+
+<div class="cols-panel" id="colsPanel">
+  <div class="cols-grid" id="colsGrid"></div>
+</div>
+
+<div class="count" id="rowCount">در حال بارگذاری…</div>
+
+<div class="table-wrap">
+  <table id="dataTable">
+    <thead></thead>
+    <tbody></tbody>
+  </table>
+</div>
+
+<script>
+/* ==========================================================
+   API و پروکسی‌ها
+   ========================================================== */
+const API_ORIGIN = "https://webapp.irimo.ir/metapi/msglist.php";
+const PROXIES = [
+  { name: "corsproxy.io",  build: u => "https://corsproxy.io/?url=" + encodeURIComponent(u) },
+  { name: "allorigins",    build: u => "https://api.allorigins.win/raw?url=" + encodeURIComponent(u) },
+  { name: "codetabs",      build: u => "https://api.codetabs.com/v1/proxy?quest=" + encodeURIComponent(u) },
+  { name: "thingproxy",    build: u => "https://thingproxy.freeboard.io/fetch/" + u },
+  { name: "direct",        build: u => u }
+];
+
+let rawData = [];
+
+/* ==========================================================
+   ستون‌ها
+   ========================================================== */
+const COLUMNS = [
+  { key: "station",        label: "ایستگاه",       type: "text", rtl: true },
+  { key: "local_province", label: "استان (فارسی)", type: "text", rtl: true },
+  { key: "province",       label: "Province (EN)", type: "text" },
+  { key: "t",              label: "دما (°C)",      type: "num", heat: true },
+  { key: "t_min",          label: "حداقل دما",     type: "num", heat: true },
+  { key: "t_max",          label: "حداکثر دما",    type: "num", heat: true },
+  { key: "rrr24",          label: "بارش ۲۴س",      type: "num", heat: true },
+  { key: "rrr6",           label: "بارش ۶س",       type: "num", heat: true },
+  { key: "lat",            label: "عرض جغرافیایی", type: "num", heat: true },
+  { key: "lon",            label: "طول جغرافیایی", type: "num", heat: true },
+  { key: "is_center",      label: "مرکز استان",    type: "bool" },
+  { key: "wmo_code",       label: "کد WMO",        type: "text" },
+  { key: "data_time",      label: "زمان داده",      type: "text" }
+];
+
+/* ==========================================================
+   رنگ‌ها
+   ========================================================== */
+const COLOR_STOPS = [
+  "#4a148c", "#283593", "#1976d2", "#388e3c",
+  "#fbc02d", "#f57c00", "#d32f2f"
+];
+
+/* ==========================================================
+   توابع رنگ
+   ========================================================== */
+function hexToRgb(hex) {
+  hex = hex.replace("#", "");
+  if (hex.length === 3) hex = hex.split("").map(c => c + c).join("");
+  return {
+    r: parseInt(hex.substr(0, 2), 16),
+    g: parseInt(hex.substr(2, 2), 16),
+    b: parseInt(hex.substr(4, 2), 16)
+  };
+}
+function rgbToHex({ r, g, b }) {
+  const h = n => n.toString(16).padStart(2, "0");
+  return "#" + h(r) + h(g) + h(b);
+}
+function lerpColor(c1, c2, t) {
+  const a = hexToRgb(c1), b = hexToRgb(c2);
+  return rgbToHex({
+    r: Math.round(a.r + (b.r - a.r) * t),
+    g: Math.round(a.g + (b.g - a.g) * t),
+    b: Math.round(a.b + (b.b - a.b) * t)
+  });
+}
+function colorFromRatio(ratio) {
+  ratio = Math.max(0, Math.min(1, ratio));
+  const n = COLOR_STOPS.length - 1;
+  const seg = ratio * n;
+  const i = Math.min(Math.floor(seg), n - 1);
+  const t = seg - i;
+  return lerpColor(COLOR_STOPS[i], COLOR_STOPS[i + 1], t);
+}
+function contrastText(hexBg) {
+  const { r, g, b } = hexToRgb(hexBg);
+  const lum = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
+  return lum > 0.65 ? "#111" : "#fff";
+}
+
+/* ==========================================================
+   محاسبهٔ بازه
+   ========================================================== */
+function computeRanges(rows) {
+  const ranges = {};
+  for (const c of COLUMNS) {
+    if (c.type !== "num") continue;
+    let min = Infinity, max = -Infinity, count = 0;
+    for (const row of rows) {
+      const v = row[c.key];
+      if (v === null || v === undefined || v === "") continue;
+      const n = Number(v);
+      if (isNaN(n)) continue;
+      if (n < min) min = n;
+      if (n > max) max = n;
+      count++;
+    }
+    ranges[c.key] = count > 0
+      ? { min, max, valid: min !== max }
+      : { min: 0, max: 1, valid: false };
+  }
+  return ranges;
+}
+let RANGES = {};
+
+/* ==========================================================
+   وضعیت
+   ========================================================== */
+const state = {
+  visibleCols: new Set(COLUMNS.map(c => c.key)),
+  sortKey: null,
+  sortDir: 1,
+  search: ""
+};
+
+const tbody    = document.querySelector("#dataTable tbody");
+const thead    = document.querySelector("#dataTable thead");
+const rowCountEl = document.getElementById("rowCount");
+const colsGrid = document.getElementById("colsGrid");
+const colsPanel = document.getElementById("colsPanel");
+const statusEl = document.getElementById("status");
+
+/* ==========================================================
+   ابزار
+   ========================================================== */
+function setStatus(msg, type = "info") {
+  statusEl.className = "status " + type;
+  statusEl.innerHTML = msg;
+}
+function fmtNumber(n) {
+  if (Number.isInteger(n)) return n.toString();
+  return parseFloat(n.toFixed(2)).toString();
+}
+function fmtCell(value, col) {
+  if (value === null || value === undefined || value === "") {
+    return { html: `<span class="null">—</span>`, style: "" };
+  }
+  if (col.type === "bool") {
+    return {
+      html: value ? `<span class="badge yes">بله</span>` : `<span class="badge no">خیر</span>`,
+      style: ""
+    };
+  }
+  if (col.type === "num") {
+    const n = Number(value);
+    if (!isNaN(n)) {
+      let style = "";
+      if (col.heat && RANGES[col.key]) {
+        const { min, max, valid } = RANGES[col.key];
+        const ratio = valid ? (n - min) / (max - min) : 0.5;
+        const bg = colorFromRatio(ratio);
+        const fg = contrastText(bg);
+        style = `background:${bg};color:${fg};font-weight:600;`;
+      }
+      return { html: `<span class="num">${fmtNumber(n)}</span>`, style };
+    }
+  }
+  return { html: String(value), style: "" };
+}
+
+/* ==========================================================
+   رندر
+   ========================================================== */
+function renderHead() {
+  const cols = COLUMNS.filter(c => state.visibleCols.has(c.key));
+  let html = "<tr>";
+  cols.forEach(c => {
+    const sorted = state.sortKey === c.key;
+    const cls = sorted ? (state.sortDir === 1 ? "sorted-asc" : "sorted-desc") : "";
+    const arrow = sorted ? (state.sortDir === 1 ? "▲" : "▼") : "⇅";
+    let rangeInfo = "";
+    if (c.type === "num" && RANGES[c.key] && rawData.length > 0) {
+      const { min, max } = RANGES[c.key];
+      rangeInfo = `<span class="range">${fmtNumber(min)} ← ${fmtNumber(max)}</span>`;
+    }
+    html += `<th class="${cls}" data-key="${c.key}">
+               <span class="arrow">${arrow}</span>${c.label}${rangeInfo}
+             </th>`;
+  });
+  html += "</tr>";
+  thead.innerHTML = html;
+  thead.querySelectorAll("th").forEach(th => {
+    th.addEventListener("click", () => {
+      const key = th.dataset.key;
+      if (state.sortKey === key) state.sortDir *= -1;
+      else { state.sortKey = key; state.sortDir = 1; }
+      render();
+    });
+  });
+}
+
+function render() {
+  const cols = COLUMNS.filter(c => state.visibleCols.has(c.key));
+  let rows = rawData.filter(row => {
+    if (!state.search) return true;
+    const q = state.search.toLowerCase();
+    return COLUMNS.some(c => {
+      const v = row[c.key];
+      return v !== null && v !== undefined && String(v).toLowerCase().includes(q);
+    });
+  });
+  if (state.sortKey) {
+    const col = COLUMNS.find(c => c.key === state.sortKey);
+    rows = rows.slice().sort((a, b) => {
+      const va = a[state.sortKey], vb = b[state.sortKey];
+      if (va === null || va === undefined) return 1;
+      if (vb === null || vb === undefined) return -1;
+      let cmp;
+      if (col.type === "num") cmp = Number(va) - Number(vb);
+      else if (col.type === "bool") cmp = (va ? 1 : 0) - (vb ? 1 : 0);
+      else cmp = String(va).localeCompare(String(vb), "fa");
+      return cmp * state.sortDir;
+    });
+  }
+  if (rows.length === 0) {
+    tbody.innerHTML = `<tr><td colspan="${cols.length}" class="empty">موردی یافت نشد</td></tr>`;
+  } else {
+    const parts = [];
+    for (const row of rows) {
+      parts.push("<tr>");
+      for (const c of cols) {
+        const cls = c.rtl ? "rtl" : "";
+        const { html, style } = fmtCell(row[c.key], c);
+        const tdStyle = style ? ` style="${style}"` : "";
+        parts.push(`<td class="${cls}"${tdStyle}>${html}</td>`);
+      }
+      parts.push("</tr>");
+    }
+    tbody.innerHTML = parts.join("");
+  }
+  rowCountEl.textContent =
+    `نمایش ${rows.length} از ${rawData.length} رکورد` +
+    (state.search ? " (فیلترشده)" : "");
+}
+
+/* ==========================================================
+   پنل انتخاب ستون
+   ========================================================== */
+function buildColsPanel() {
+  colsGrid.innerHTML = COLUMNS.map(c => `
+    <label>
+      <input type="checkbox" data-key="${c.key}" ${state.visibleCols.has(c.key) ? "checked" : ""}>
+      ${c.label}
+    </label>
+  `).join("");
+  colsGrid.querySelectorAll("input[type=checkbox]").forEach(cb => {
+    cb.addEventListener("change", () => {
+      if (cb.checked) state.visibleCols.add(cb.dataset.key);
+      else state.visibleCols.delete(cb.dataset.key);
+      if (state.visibleCols.size === 0) {
+        cb.checked = true;
+        state.visibleCols.add(cb.dataset.key);
+        return;
+      }
+      renderHead();
+      render();
+    });
+  });
+}
+
+/* ==========================================================
+   استخراج آرایه
+   ========================================================== */
+function extractArray(data) {
+  if (Array.isArray(data)) return data;
+  if (data && typeof data === "object") {
+    if (Array.isArray(data.contents)) return data.contents;
+    if (typeof data.contents === "string") {
+      try {
+        const parsed = JSON.parse(data.contents);
+        if (Array.isArray(parsed)) return parsed;
+      } catch (e) {}
+    }
+    if (Array.isArray(data.data)) return data.data;
+  }
+  if (typeof data === "string") {
+    try {
+      const parsed = JSON.parse(data);
+      if (Array.isArray(parsed)) return parsed;
+    } catch (e) {}
+  }
+  return null;
+}
+
+/* ==========================================================
+   دانلود خودکار JSON
+   ========================================================== */
+function timestamp() {
+  const d = new Date();
+  const p = n => n.toString().padStart(2, "0");
+  return `${d.getFullYear()}${p(d.getMonth()+1)}${p(d.getDate())}_${p(d.getHours())}${p(d.getMinutes())}`;
+}
+function saveBlob(blob, filename) {
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = filename;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  setTimeout(() => URL.revokeObjectURL(url), 1000);
+}
+
+async function downloadJSON() {
+  const btn = document.getElementById("downloadBtn");
+  const originalText = btn.textContent;
+  btn.disabled = true;
+  btn.textContent = "⏳ در حال دانلود…";
+  setStatus("در حال دانلود فایل از سرور…", "info");
+
+  // روش ۱: پروکسی‌ها
+  for (const proxy of PROXIES) {
+    const url = proxy.build(API_ORIGIN);
+    try {
+      const controller = new AbortController();
+      const timeout = setTimeout(() => controller.abort(), 25000);
+      const res = await fetch(url, { cache: "no-store", signal: controller.signal });
+      clearTimeout(timeout);
+
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+
+      const text = await res.text();
+      JSON.parse(text); // اعتبارسنجی
+
+      const blob = new Blob([text], { type: "application/json;charset=utf-8" });
+      saveBlob(blob, `msglist_${timestamp()}.json`);
+
+      setStatus(
+        `✅ فایل با موفقیت از <b>${proxy.name}</b> دانلود شد (${(text.length/1024).toFixed(1)} KB).`,
+        "success"
+      );
+      btn.disabled = false;
+      btn.textContent = originalText;
+      return;
+    } catch (err) { /* برو بعدی */ }
+  }
+
+  // روش ۲: دانلود مستقیم با تگ <a>
+  try {
+    const a = document.createElement("a");
+    a.href = API_ORIGIN;
+    a.download = `msglist_${timestamp()}.json`;
+    a.target = "_blank";
+    a.rel = "noopener";
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+
+    setStatus(
+      "⚠️ پروکسی‌ها جواب ندادند. دانلود مستقیم آغاز شد؛ " +
+      "اگر مرورگر فایل را ذخیره نکرد، از دکمهٔ «بارگذاری فایل JSON» استفاده کنید.",
+      "warn"
+    );
+    btn.disabled = false;
+    btn.textContent = originalText;
+    return;
+  } catch (err) {
+    // روش ۳
+    window.open(API_ORIGIN, "_blank");
+    setStatus(
+      "⚠️ لینک در تب جدید باز شد. با <code>Ctrl+S</code> ذخیره کنید، " +
+      "سپس از دکمهٔ «بارگذاری فایل JSON» استفاده کنید.",
+      "warn"
+    );
+    btn.disabled = false;
+    btn.textContent = originalText;
+  }
+}
+
+/* ==========================================================
+   بارگذاری از API
+   ========================================================== */
+async function loadFromAPI() {
+  setStatus("در حال دریافت داده از API…", "info");
+  document.getElementById("reloadBtn").disabled = true;
+  const errors = [];
+  for (const proxy of PROXIES) {
+    const url = proxy.build(API_ORIGIN);
+    try {
+      const controller = new AbortController();
+      const timeout = setTimeout(() => controller.abort(), 20000);
+      const res = await fetch(url, { cache: "no-store", signal: controller.signal });
+      clearTimeout(timeout);
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      const raw = await res.text();
+      let data;
+      try { data = JSON.parse(raw); }
+      catch (e) { throw new Error("پاسخ JSON نامعتبر"); }
+      const arr = extractArray(data);
+      if (!arr) throw new Error("ساختار داده نامشخص");
+
+      rawData = arr;
+      RANGES = computeRanges(rawData);
+      setStatus(`✅ ${rawData.length} رکورد از <b>${proxy.name}</b> بارگذاری شد.`, "success");
+      renderHead();
+      render();
+      document.getElementById("reloadBtn").disabled = false;
+      return;
+    } catch (err) {
+      errors.push(`${proxy.name}: ${err.message}`);
+    }
+  }
+  document.getElementById("reloadBtn").disabled = false;
+  setStatus(
+    "⚠️ همهٔ روش‌ها شکست خوردند:<br>" +
+    errors.map(e => "• " + e).join("<br>") +
+    "<br><br><b>راه‌حل:</b> از دکمهٔ «دانلود خودکار JSON» یا «بارگذاری فایل JSON» استفاده کنید.",
+    "error"
+  );
+  renderHead();
+  render();
+}
+
+/* ==========================================================
+   بارگذاری از فایل
+   ========================================================== */
+document.getElementById("fileBtn").addEventListener("click", () => {
+  document.getElementById("fileInput").click();
+});
+document.getElementById("fileInput").addEventListener("change", e => {
+  const file = e.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = ev => {
+    try {
+      const data = JSON.parse(ev.target.result);
+      const arr = extractArray(data);
+      if (!arr) throw new Error("ساختار JSON نامشخص است");
+      rawData = arr;
+      RANGES = computeRanges(rawData);
+      setStatus(`✅ ${rawData.length} رکورد از فایل «${file.name}» بارگذاری شد.`, "success");
+      renderHead();
+      render();
+    } catch (err) {
+      setStatus("❌ خطا در خواندن فایل: " + err.message, "error");
+    }
+  };
+  reader.readAsText(file);
+});
+
+/* ==========================================================
+   رویدادها
+   ========================================================== */
+document.getElementById("toggleCols").addEventListener("click", () => {
+  colsPanel.classList.toggle("open");
+});
+document.getElementById("showAll").addEventListener("click", () => {
+  state.visibleCols = new Set(COLUMNS.map(c => c.key));
+  buildColsPanel();
+  renderHead();
+  render();
+});
+document.getElementById("reloadBtn").addEventListener("click", loadFromAPI);
+document.getElementById("downloadBtn").addEventListener("click", downloadJSON);
+document.getElementById("searchBox").addEventListener("input", e => {
+  state.search = e.target.value.trim();
+  render();
+});
+
+/* ==========================================================
+   اجرا
+   ========================================================== */
+buildColsPanel();
+renderHead();
+render();
+loadFromAPI();
+</script>
+</body>
+</html>
