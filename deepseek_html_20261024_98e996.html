@@ -142,7 +142,7 @@
 <body>
 
 <h1>جدول داده‌های هواشناسی — تم سیاه</h1>
-<div class="sub">منبع: <code>webapp.irimo.ir/metapi/msglist.php</code></div>
+<div class="sub">منبع: <code>irimo-proxy.33c-yazd.workers.dev</code></div>
 
 <div class="toolbar">
   <input type="search" id="searchBox" placeholder="جستجو در همه ردیف‌ها…">
@@ -180,15 +180,12 @@
 
 <script>
 /* ==========================================================
-   API و پروکسی‌ها
+   API و پروکسی‌ها (به‌روزرسانی‌شده با Cloudflare Worker)
    ========================================================== */
-const API_ORIGIN = "https://webapp.irimo.ir/metapi/msglist.php";
+const API_ORIGIN = "https://irimo-proxy.33c-yazd.workers.dev";
+
 const PROXIES = [
-  { name: "corsproxy.io",  build: u => "https://corsproxy.io/?url=" + encodeURIComponent(u) },
-  { name: "allorigins",    build: u => "https://api.allorigins.win/raw?url=" + encodeURIComponent(u) },
-  { name: "codetabs",      build: u => "https://api.codetabs.com/v1/proxy?quest=" + encodeURIComponent(u) },
-  { name: "thingproxy",    build: u => "https://thingproxy.freeboard.io/fetch/" + u },
-  { name: "direct",        build: u => u }
+  { name: "my-worker", build: u => u } // فقط از Worker خودمان استفاده می‌کند
 ];
 
 let rawData = [];
