@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>جدول هواشناسی — تم سیاه + دانلود خودکار</title>
+<title>جدول هواشناسی — تم سیاه</title>
 <style>
   * { box-sizing: border-box; }
   html, body { height: 100%; }
@@ -39,10 +39,7 @@
   .toolbar button.secondary:hover { background: #2e374a; }
   .toolbar button:disabled { opacity: .5; cursor: wait; }
 
-  /* دکمهٔ سبز دانلود */
-  .toolbar button.download {
-    background: #1e6b3f; color: #fff;
-  }
+  .toolbar button.download { background: #1e6b3f; color: #fff; }
   .toolbar button.download:hover { background: #248049; }
   .toolbar button.download:disabled { background: #1a3a24; }
 
@@ -82,8 +79,7 @@
   .legend .bar {
     width: 260px; height: 16px; border-radius: 8px;
     border: 1px solid #2a3040;
-    background: linear-gradient(to left,
-      #d32f2f, #f57c00, #fbc02d, #388e3c, #1976d2, #283593, #4a148c);
+    background: linear-gradient(to left, #d32f2f, #f57c00, #fbc02d, #388e3c, #1976d2, #283593, #4a148c);
   }
   .legend .min { color: #b39ddb; font-weight: 600; }
   .legend .max { color: #ef5350; font-weight: 600; }
@@ -142,16 +138,12 @@
 <body>
 
 <h1>جدول داده‌های هواشناسی — تم سیاه</h1>
-<div class="sub">منبع: <code>irimo-proxy.33c-yazd.workers.dev</code></div>
+<div class="sub">منبع: <code>data.json (لوکال)</code></div>
 
 <div class="toolbar">
   <input type="search" id="searchBox" placeholder="جستجو در همه ردیف‌ها…">
   <button id="toggleCols">انتخاب ستون‌ها</button>
   <button id="showAll">نمایش همه ستون‌ها</button>
-  <button id="reloadBtn" class="secondary">بارگذاری از API</button>
-  <button id="downloadBtn" class="download">⬇ دانلود خودکار JSON</button>
-  <button id="fileBtn" class="secondary">بارگذاری فایل JSON</button>
-  <input type="file" id="fileInput" accept=".json,application/json" hidden>
 </div>
 
 <div class="legend">
@@ -179,22 +171,8 @@
 </div>
 
 <script>
-/* ==========================================================
-   API و پروکسی‌ها (به‌روزرسانی‌شده با Cloudflare Worker)
-   ========================================================== */
-const API_ORIGIN = "https://webapp.irimo.ir/metapi/msglist.php";
-
-const PROXIES = [
-  { name: "allorigins", build: u => "https://api.allorigins.win/raw?url=" + encodeURIComponent(u) },
-  { name: "corsproxy", build: u => "https://corsproxy.io/?url=" + encodeURIComponent(u) },
-  { name: "codetabs", build: u => "https://api.codetabs.com/v1/proxy?quest=" + encodeURIComponent(u) }
-];
-
 let rawData = [];
 
-/* ==========================================================
-   ستون‌ها
-   ========================================================== */
 const COLUMNS = [
   { key: "station",        label: "ایستگاه",       type: "text", rtl: true },
   { key: "local_province", label: "استان (فارسی)", type: "text", rtl: true },
@@ -211,25 +189,12 @@ const COLUMNS = [
   { key: "data_time",      label: "زمان داده",      type: "text" }
 ];
 
-/* ==========================================================
-   رنگ‌ها
-   ========================================================== */
-const COLOR_STOPS = [
-  "#4a148c", "#283593", "#1976d2", "#388e3c",
-  "#fbc02d", "#f57c00", "#d32f2f"
-];
+const COLOR_STOPS = ["#4a148c", "#283593", "#1976d2", "#388e3c", "#fbc02d", "#f57c00", "#d32f2f"];
 
-/* ==========================================================
-   توابع رنگ
-   ========================================================== */
 function hexToRgb(hex) {
   hex = hex.replace("#", "");
   if (hex.length === 3) hex = hex.split("").map(c => c + c).join("");
-  return {
-    r: parseInt(hex.substr(0, 2), 16),
-    g: parseInt(hex.substr(2, 2), 16),
-    b: parseInt(hex.substr(4, 2), 16)
-  };
+  return { r: parseInt(hex.substr(0, 2), 16), g: parseInt(hex.substr(2, 2), 16), b: parseInt(hex.substr(4, 2), 16) };
 }
 function rgbToHex({ r, g, b }) {
   const h = n => n.toString(16).padStart(2, "0");
@@ -237,11 +202,7 @@ function rgbToHex({ r, g, b }) {
 }
 function lerpColor(c1, c2, t) {
   const a = hexToRgb(c1), b = hexToRgb(c2);
-  return rgbToHex({
-    r: Math.round(a.r + (b.r - a.r) * t),
-    g: Math.round(a.g + (b.g - a.g) * t),
-    b: Math.round(a.b + (b.b - a.b) * t)
-  });
+  return rgbToHex({ r: Math.round(a.r + (b.r - a.r) * t), g: Math.round(a.g + (b.g - a.g) * t), b: Math.round(a.b + (b.b - a.b) * t) });
 }
 function colorFromRatio(ratio) {
   ratio = Math.max(0, Math.min(1, ratio));
@@ -257,9 +218,6 @@ function contrastText(hexBg) {
   return lum > 0.65 ? "#111" : "#fff";
 }
 
-/* ==========================================================
-   محاسبهٔ بازه
-   ========================================================== */
 function computeRanges(rows) {
   const ranges = {};
   for (const c of COLUMNS) {
@@ -274,52 +232,28 @@ function computeRanges(rows) {
       if (n > max) max = n;
       count++;
     }
-    ranges[c.key] = count > 0
-      ? { min, max, valid: min !== max }
-      : { min: 0, max: 1, valid: false };
+    ranges[c.key] = count > 0 ? { min, max, valid: min !== max } : { min: 0, max: 1, valid: false };
   }
   return ranges;
 }
 let RANGES = {};
 
-/* ==========================================================
-   وضعیت
-   ========================================================== */
-const state = {
-  visibleCols: new Set(COLUMNS.map(c => c.key)),
-  sortKey: null,
-  sortDir: 1,
-  search: ""
-};
-
-const tbody    = document.querySelector("#dataTable tbody");
-const thead    = document.querySelector("#dataTable thead");
+const state = { visibleCols: new Set(COLUMNS.map(c => c.key)), sortKey: null, sortDir: 1, search: "" };
+const tbody = document.querySelector("#dataTable tbody");
+const thead = document.querySelector("#dataTable thead");
 const rowCountEl = document.getElementById("rowCount");
 const colsGrid = document.getElementById("colsGrid");
 const colsPanel = document.getElementById("colsPanel");
 const statusEl = document.getElementById("status");
 
-/* ==========================================================
-   ابزار
-   ========================================================== */
 function setStatus(msg, type = "info") {
   statusEl.className = "status " + type;
   statusEl.innerHTML = msg;
 }
-function fmtNumber(n) {
-  if (Number.isInteger(n)) return n.toString();
-  return parseFloat(n.toFixed(2)).toString();
-}
+function fmtNumber(n) { return Number.isInteger(n) ? n.toString() : parseFloat(n.toFixed(2)).toString(); }
 function fmtCell(value, col) {
-  if (value === null || value === undefined || value === "") {
-    return { html: `<span class="null">—</span>`, style: "" };
-  }
-  if (col.type === "bool") {
-    return {
-      html: value ? `<span class="badge yes">بله</span>` : `<span class="badge no">خیر</span>`,
-      style: ""
-    };
-  }
+  if (value === null || value === undefined || value === "") return { html: `<span class="null">—</span>`, style: "" };
+  if (col.type === "bool") return { html: value ? `<span class="badge yes">بله</span>` : `<span class="badge no">خیر</span>`, style: "" };
   if (col.type === "num") {
     const n = Number(value);
     if (!isNaN(n)) {
@@ -337,9 +271,6 @@ function fmtCell(value, col) {
   return { html: String(value), style: "" };
 }
 
-/* ==========================================================
-   رندر
-   ========================================================== */
 function renderHead() {
   const cols = COLUMNS.filter(c => state.visibleCols.has(c.key));
   let html = "<tr>";
@@ -352,9 +283,7 @@ function renderHead() {
       const { min, max } = RANGES[c.key];
       rangeInfo = `<span class="range">${fmtNumber(min)} ← ${fmtNumber(max)}</span>`;
     }
-    html += `<th class="${cls}" data-key="${c.key}">
-               <span class="arrow">${arrow}</span>${c.label}${rangeInfo}
-             </th>`;
+    html += `<th class="${cls}" data-key="${c.key}"><span class="arrow">${arrow}</span>${c.label}${rangeInfo}</th>`;
   });
   html += "</tr>";
   thead.innerHTML = html;
@@ -407,14 +336,9 @@ function render() {
     }
     tbody.innerHTML = parts.join("");
   }
-  rowCountEl.textContent =
-    `نمایش ${rows.length} از ${rawData.length} رکورد` +
-    (state.search ? " (فیلترشده)" : "");
+  rowCountEl.textContent = `نمایش ${rows.length} از ${rawData.length} رکورد` + (state.search ? " (فیلترشده)" : "");
 }
 
-/* ==========================================================
-   پنل انتخاب ستون
-   ========================================================== */
 function buildColsPanel() {
   colsGrid.innerHTML = COLUMNS.map(c => `
     <label>
@@ -426,223 +350,48 @@ function buildColsPanel() {
     cb.addEventListener("change", () => {
       if (cb.checked) state.visibleCols.add(cb.dataset.key);
       else state.visibleCols.delete(cb.dataset.key);
-      if (state.visibleCols.size === 0) {
-        cb.checked = true;
-        state.visibleCols.add(cb.dataset.key);
-        return;
-      }
+      if (state.visibleCols.size === 0) { cb.checked = true; state.visibleCols.add(cb.dataset.key); return; }
       renderHead();
       render();
     });
   });
 }
 
-/* ==========================================================
-   استخراج آرایه
-   ========================================================== */
-function extractArray(data) {
-  if (Array.isArray(data)) return data;
-  if (data && typeof data === "object") {
-    if (Array.isArray(data.contents)) return data.contents;
-    if (typeof data.contents === "string") {
-      try {
-        const parsed = JSON.parse(data.contents);
-        if (Array.isArray(parsed)) return parsed;
-      } catch (e) {}
-    }
-    if (Array.isArray(data.data)) return data.data;
-  }
-  if (typeof data === "string") {
-    try {
-      const parsed = JSON.parse(data);
-      if (Array.isArray(parsed)) return parsed;
-    } catch (e) {}
-  }
-  return null;
-}
-
-/* ==========================================================
-   دانلود خودکار JSON
-   ========================================================== */
-function timestamp() {
-  const d = new Date();
-  const p = n => n.toString().padStart(2, "0");
-  return `${d.getFullYear()}${p(d.getMonth()+1)}${p(d.getDate())}_${p(d.getHours())}${p(d.getMinutes())}`;
-}
-function saveBlob(blob, filename) {
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement("a");
-  a.href = url;
-  a.download = filename;
-  document.body.appendChild(a);
-  a.click();
-  document.body.removeChild(a);
-  setTimeout(() => URL.revokeObjectURL(url), 1000);
-}
-
-async function downloadJSON() {
-  const btn = document.getElementById("downloadBtn");
-  const originalText = btn.textContent;
-  btn.disabled = true;
-  btn.textContent = "⏳ در حال دانلود…";
-  setStatus("در حال دانلود فایل از سرور…", "info");
-
-  // روش ۱: پروکسی‌ها
-  for (const proxy of PROXIES) {
-    const url = proxy.build(API_ORIGIN);
-    try {
-      const controller = new AbortController();
-      const timeout = setTimeout(() => controller.abort(), 25000);
-      const res = await fetch(url, { cache: "no-store", signal: controller.signal });
-      clearTimeout(timeout);
-
-      if (!res.ok) throw new Error(`HTTP ${res.status}`);
-
-      const text = await res.text();
-      JSON.parse(text); // اعتبارسنجی
-
-      const blob = new Blob([text], { type: "application/json;charset=utf-8" });
-      saveBlob(blob, `msglist_${timestamp()}.json`);
-
-      setStatus(
-        `✅ فایل با موفقیت از <b>${proxy.name}</b> دانلود شد (${(text.length/1024).toFixed(1)} KB).`,
-        "success"
-      );
-      btn.disabled = false;
-      btn.textContent = originalText;
-      return;
-    } catch (err) { /* برو بعدی */ }
-  }
-
-  // روش ۲: دانلود مستقیم با تگ <a>
+// بارگذاری مستقیم از فایل data.json
+async function loadData() {
+  setStatus("در حال خواندن فایل data.json…", "info");
   try {
-    const a = document.createElement("a");
-    a.href = API_ORIGIN;
-    a.download = `msglist_${timestamp()}.json`;
-    a.target = "_blank";
-    a.rel = "noopener";
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-
-    setStatus(
-      "⚠️ پروکسی‌ها جواب ندادند. دانلود مستقیم آغاز شد؛ " +
-      "اگر مرورگر فایل را ذخیره نکرد، از دکمهٔ «بارگذاری فایل JSON» استفاده کنید.",
-      "warn"
-    );
-    btn.disabled = false;
-    btn.textContent = originalText;
-    return;
+    const res = await fetch("data.json");
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const data = await res.json();
+    rawData = Array.isArray(data) ? data : (data.data || data.contents);
+    if (!rawData) throw new Error("ساختار نامشخص");
+    
+    RANGES = computeRanges(rawData);
+    setStatus(`✅ ${rawData.length} رکورد با موفقیت بارگذاری شد.`, "success");
+    renderHead();
+    render();
   } catch (err) {
-    // روش ۳
-    window.open(API_ORIGIN, "_blank");
-    setStatus(
-      "⚠️ لینک در تب جدید باز شد. با <code>Ctrl+S</code> ذخیره کنید، " +
-      "سپس از دکمهٔ «بارگذاری فایل JSON» استفاده کنید.",
-      "warn"
-    );
-    btn.disabled = false;
-    btn.textContent = originalText;
+    setStatus("❌ خطا در خواندن فایل data.json: " + err.message + "<br>مطمئن شوید فایل data.json در کنار این فایل HTML در گیت‌هاب قرار دارد.", "error");
   }
 }
 
-/* ==========================================================
-   بارگذاری از API
-   ========================================================== */
-async function loadFromAPI() {
-  setStatus("در حال دریافت داده از API…", "info");
-  document.getElementById("reloadBtn").disabled = true;
-  const errors = [];
-  for (const proxy of PROXIES) {
-    const url = proxy.build(API_ORIGIN);
-    try {
-      const controller = new AbortController();
-      const timeout = setTimeout(() => controller.abort(), 20000);
-      const res = await fetch(url, { cache: "no-store", signal: controller.signal });
-      clearTimeout(timeout);
-      if (!res.ok) throw new Error(`HTTP ${res.status}`);
-      const raw = await res.text();
-      let data;
-      try { data = JSON.parse(raw); }
-      catch (e) { throw new Error("پاسخ JSON نامعتبر"); }
-      const arr = extractArray(data);
-      if (!arr) throw new Error("ساختار داده نامشخص");
-
-      rawData = arr;
-      RANGES = computeRanges(rawData);
-      setStatus(`✅ ${rawData.length} رکورد از <b>${proxy.name}</b> بارگذاری شد.`, "success");
-      renderHead();
-      render();
-      document.getElementById("reloadBtn").disabled = false;
-      return;
-    } catch (err) {
-      errors.push(`${proxy.name}: ${err.message}`);
-    }
-  }
-  document.getElementById("reloadBtn").disabled = false;
-  setStatus(
-    "⚠️ همهٔ روش‌ها شکست خوردند:<br>" +
-    errors.map(e => "• " + e).join("<br>") +
-    "<br><br><b>راه‌حل:</b> از دکمهٔ «دانلود خودکار JSON» یا «بارگذاری فایل JSON» استفاده کنید.",
-    "error"
-  );
-  renderHead();
-  render();
-}
-
-/* ==========================================================
-   بارگذاری از فایل
-   ========================================================== */
-document.getElementById("fileBtn").addEventListener("click", () => {
-  document.getElementById("fileInput").click();
-});
-document.getElementById("fileInput").addEventListener("change", e => {
-  const file = e.target.files[0];
-  if (!file) return;
-  const reader = new FileReader();
-  reader.onload = ev => {
-    try {
-      const data = JSON.parse(ev.target.result);
-      const arr = extractArray(data);
-      if (!arr) throw new Error("ساختار JSON نامشخص است");
-      rawData = arr;
-      RANGES = computeRanges(rawData);
-      setStatus(`✅ ${rawData.length} رکورد از فایل «${file.name}» بارگذاری شد.`, "success");
-      renderHead();
-      render();
-    } catch (err) {
-      setStatus("❌ خطا در خواندن فایل: " + err.message, "error");
-    }
-  };
-  reader.readAsText(file);
-});
-
-/* ==========================================================
-   رویدادها
-   ========================================================== */
-document.getElementById("toggleCols").addEventListener("click", () => {
-  colsPanel.classList.toggle("open");
-});
+document.getElementById("toggleCols").addEventListener("click", () => colsPanel.classList.toggle("open"));
 document.getElementById("showAll").addEventListener("click", () => {
   state.visibleCols = new Set(COLUMNS.map(c => c.key));
   buildColsPanel();
   renderHead();
   render();
 });
-document.getElementById("reloadBtn").addEventListener("click", loadFromAPI);
-document.getElementById("downloadBtn").addEventListener("click", downloadJSON);
 document.getElementById("searchBox").addEventListener("input", e => {
   state.search = e.target.value.trim();
   render();
 });
 
-/* ==========================================================
-   اجرا
-   ========================================================== */
 buildColsPanel();
 renderHead();
 render();
-loadFromAPI();
+loadData(); // اجرای خواندن فایل
 </script>
 </body>
 </html>
