@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>محاسبه سود مرکب روزانه (تاریخ شمسی)</title>
+<style>
+  * { box-sizing: border-box; }
+  body {
+    font-family: Tahoma, sans-serif;
+    background: #000;
+    min-height: 100vh;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 20px;
+    color: #fff;
+  }
+  .card {
+    background: #0a0a0a;
+    border: 1px solid #333;
+    border-radius: 16px;
+    padding: 30px;
+    max-width: 750px;
+    width: 100%;
+    box-shadow: 0 20px 60px rgba(255,255,255,.05);
+  }
+  h2 {
+    text-align: center;
+    color: #fff;
+    margin-top: 0;
+    letter-spacing: 1px;
+  }
+  label {
+    display: block;
+    margin: 14px 0 6px;
+    color: #ccc;
+    font-size: 14px;
+  }
+  input {
+    width: 100%;
+    padding: 10px 12px;
+    background: #000;
+    border: 1px solid #444;
+    border-radius: 8px;
+    font-size: 15px;
+    font-family: inherit;
+    color: #fff;
+    direction: ltr;
+    text-align: left;
+  }
+  input:focus {
+    outline: none;
+    border-color: #fff;
+    box-shadow: 0 0 0 3px rgba(255,255,255,.15);
+  }
+  .date-group {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+  }
+  .date-group input {
+    text-align: center;
+    direction: ltr;
+  }
+  .date-group span {
+    color: #888;
+    font-size: 18px;
+  }
+  button {
+    width: 100%;
+    margin-top: 20px;
+    padding: 12px;
+    background: #fff;
+    color: #000;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: bold;
+    font-family: inherit;
+    cursor: pointer;
+    transition: transform .15s, background .15s;
+  }
+  button:hover { transform: translateY(-2px); background: #e6e6e6; }
+  .result {
+    margin-top: 22px;
+    background: #000;
+    border: 1px solid #333;
+    border-radius: 10px;
+    padding: 16px;
+    display: none;
+  }
+  .result.show { display: block; }
+  .row {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+    border-bottom: 1px dashed #333;
+    font-size: 14px;
+    color: #ccc;
+  }
+  .row:last-child { border-bottom: none; }
+  .row span:last-child { font-weight: bold; color: #fff; }
+  .highlight {
+    background: #1a1a1a;
+    border: 1px solid #444;
+    border-radius: 6px;
+    padding: 10px !important;
+    margin-top: 8px;
+  }
+  .table-wrap {
+    margin-top: 22px;
+    max-height: 400px;
+    overflow-y: auto;
+    border: 1px solid #333;
+    border-radius: 10px;
+    display: none;
+  }
+  .table-wrap.show { display: block; }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+  }
+  thead th {
+    position: sticky;
+    top: 0;
+    background: #fff;
+    color: #000;
+    padding: 10px 8px;
+    text-align: center;
+    font-weight: bold;
+  }
+  tbody td {
+    padding: 8px;
+    text-align: center;
+    border-bottom: 1px solid #222;
+    color: #ddd;
+  }
+  tbody tr:nth-child(even) { background: #111; }
+  tbody tr:nth-child(odd) { background: #000; }
+  tbody tr:hover { background: #1f1f1f; }
+  .sum-row td {
+    background: #fff;
+    color: #000;
+    font-weight: bold;
+    border-top: 2px solid #fff;
+  }
+  .table-wrap::-webkit-scrollbar { width: 8px; }
+  .table-wrap::-webkit-scrollbar-track { background: #000; }
+  .table-wrap::-webkit-scrollbar-thumb { background: #444; border-radius: 4px; }
+</style>
+</head>
+<body>
+
+<div class="card">
+  <h2>محاسبه سود مرکب روزانه</h2>
+
+  <label>سرمایه اولیه (تومان) - حداکثر ۲۴ رقم</label>
+  <input type="text" id="principal" value="100,000,000,000" maxlength="30">
+
+  <label>نرخ مؤثر سالانه (EAR) ٪</label>
+  <input type="text" id="earInput" value="40">
+
+  <label>تاریخ شروع (شمسی)</label>
+  <div class="date-group">
+    <input type="text" id="startYear" placeholder="سال" maxlength="4" style="flex:1;">
+    <span>/</span>
+    <input type="text" id="startMonth" placeholder="ماه" maxlength="2" style="flex:1;">
+    <span>/</span>
+    <input type="text" id="startDay" placeholder="روز" maxlength="2" style="flex:1;">
+  </div>
+
+  <label>تاریخ پایان (شمسی)</label>
+  <div class="date-group">
+    <input type="text" id="endYear" placeholder="سال" maxlength="4" style="flex:1;">
+    <span>/</span>
+    <input type="text" id="endMonth" placeholder="ماه" maxlength="2" style="flex:1;">
+    <span>/</span>
+    <input type="text" id="endDay" placeholder="روز" maxlength="2" style="flex:1;">
+  </div>
+
+  <button onclick="calculate()">محاسبه</button>
+
+  <div class="result" id="result">
+    <div class="row"><span>تعداد روزها:</span><span id="totalDays"></span></div>
+    <div class="row"><span>موجودی نهایی:</span><span id="finalAmount"></span></div>
+    <div class="row"><span>کل سود کسب‌شده:</span><span id="totalProfit"></span></div>
+    <div class="row"><span>نرخ روزانه:</span><span id="dailyRate"></span></div>
+    <div class="row highlight"><span>نرخ مؤثر سالانه (EAR):</span><span id="earOut"></span></div>
+  </div>
+
+  <div class="table-wrap" id="tableWrap">
+    <table>
+      <thead>
+        <tr>
+          <th>روز</th>
+          <th>تاریخ</th>
+          <th>موجودی ابتدای روز</th>
+          <th>سود روز</th>
+          <th>موجودی پایان روز</th>
+        </tr>
+      </thead>
+      <tbody id="tableBody"></tbody>
+    </table>
+  </div>
+</div>
+
+<script>
+// ================= توابع تبدیل تاریخ =================
+function gregorianToJalali(gy, gm, gd) {
+  const g_d_m = [0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334];
+  let jy = (gy <= 1600) ? 0 : 979;
+  gy -= (gy <= 1600) ? 621 : 1600;
+  const gy2 = (gm > 2) ? (gy + 1) : gy;
+  let days = (365 * gy) + Math.floor((gy2 + 3) / 4) - Math.floor((gy2 + 99) / 100) + Math.floor((gy2 + 399) / 400) - 80 + gd + g_d_m[gm - 1];
+  jy += 33 * Math.floor(days / 12053);
+  days %= 12053;
+  jy += 4 * Math.floor(days / 1461);
+  days %= 1461;
+  if (days > 365) {
+    jy += Math.floor((days - 1) / 365);
+    days = (days - 1) % 365;
+  }
+  const jm = (days < 186) ? 1 + Math.floor(days / 31) : 7 + Math.floor((days - 186) / 30);
+  const jd = 1 + ((days < 186) ? (days % 31) : ((days - 186) % 30));
+  return [jy, jm, jd];
+}
+
+function jalaliToGregorian(jy, jm, jd) {
+  let gy = (jy <= 979) ? 621 : 1600;
+  jy -= (jy <= 979) ? 0 : 979;
+  let days = (365 * jy) + (Math.floor(jy / 33) * 8) + Math.floor(((jy % 33) + 3) / 4) + 78 + jd + ((jm < 7) ? (jm - 1) * 31 : ((jm - 7) * 30) + 186);
+  gy += 400 * Math.floor(days / 146097);
+  days %= 146097;
+  if (days > 36524) {
+    gy += 100 * Math.floor(--days / 36524);
+    days %= 36524;
+    if (days >= 365) days++;
+  }
+  gy += 4 * Math.floor(days / 1461);
+  days %= 1461;
+  gy += Math.floor((days - 1) / 365);
+  days = (days - 1) % 365;
+  let gd = days + 1;
+  const sal_a = [0, 31, ((gy % 4 === 0 && gy % 100 !== 0) || (gy % 400 === 0)) ? 29 : 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+  let gm;
+  for (gm = 1; gm <= 12; gm++) {
+    if (gd <= sal_a[gm]) break;
+    gd -= sal_a[gm];
+  }
+  return [gy, gm, gd];
+}
+
+function jalaliToJD(jy, jm, jd) {
+  const [gy, gm, gd] = jalaliToGregorian(jy, jm, jd);
+  return gregorianToJD(gy, gm, gd);
+}
+
+function gregorianToJD(gy, gm, gd) {
+  if (gm <= 2) { gy -= 1; gm += 12; }
+  const A = Math.floor(gy / 100);
+  const B = 2 - A + Math.floor(A / 4);
+  return Math.floor(365.25 * (gy + 4716)) + Math.floor(30.6001 * (gm + 1)) + gd + B - 1524.5;
+}
+
+function jdToJalali(jd) {
+  const [gy, gm, gd] = jdToGregorian(jd);
+  return gregorianToJalali(gy, gm, gd);
+}
+
+function jdToGregorian(jd) {
+  const z = Math.floor(jd + 0.5);
+  const f = (jd + 0.5) - z;
+  let A = z;
+  if (z >= 2299161) {
+    const alpha = Math.floor((z - 1867216.25) / 36524.25);
+    A = z + 1 + alpha - Math.floor(alpha / 4);
+  }
+  const B = A + 1524;
+  const C = Math.floor((B - 122.1) / 365.25);
+  const D = Math.floor(365.25 * C);
+  const E = Math.floor((B - D) / 30.6001);
+  const gd = B - D - Math.floor(30.6001 * E) + f;
+  const gm = (E < 14) ? E - 1 : E - 13;
+  const gy = (gm > 2) ? C - 4716 : C - 4715;
+  return [Math.floor(gy), Math.floor(gm), Math.floor(gd)];
+}
+
+// ================= تنظیم تاریخ پیش‌فرض (امروز و +۵۵ روز) =================
+window.addEventListener('DOMContentLoaded', () => {
+  const now = new Date();
+  // دریافت تاریخ امروز میلادی
+  const gy = now.getFullYear();
+  const gm = now.getMonth() + 1;
+  const gd = now.getDate();
+
+  // تبدیل به شمسی
+  const [jy, jm, jd] = gregorianToJalali(gy, gm, gd);
+
+  // پر کردن تاریخ شروع
+  document.getElementById('startYear').value = jy;
+  document.getElementById('startMonth').value = String(jm).padStart(2, '0');
+  document.getElementById('startDay').value = String(jd).padStart(2, '0');
+
+  // محاسبه تاریخ ۵۵ روز بعد
+  const startJD = jalaliToJD(jy, jm, jd);
+  const endJD = startJD + 55;
+  const [ey, em, ed] = jdToJalali(endJD);
+
+  // پر کردن تاریخ پایان
+  document.getElementById('endYear').value = ey;
+  document.getElementById('endMonth').value = String(em).padStart(2, '0');
+  document.getElementById('endDay').value = String(ed).padStart(2, '0');
+});
+
+// فرمت اعداد
+function formatNum(n) {
+  return Math.round(n).toLocaleString('en-US');
+}
+
+function parseInputValue(id) {
+  const val = document.getElementById(id).value.replace(/,/g, '');
+  return parseFloat(val);
+}
+
+// اعتبارسنجی ورودی‌ها
+document.getElementById('principal').addEventListener('input', function() {
+  let value = this.value.replace(/[^0-9]/g, '');
+  if (value.length > 24) value = value.slice(0, 24);
+  this.value = value ? parseInt(value, 10).toLocaleString('en-US') : '';
+});
+
+document.getElementById('earInput').addEventListener('input', function() {
+  this.value = this.value.replace(/[^0-9.]/g, '');
+});
+
+['startYear', 'startMonth', 'startDay', 'endYear', 'endMonth', 'endDay'].forEach(id => {
+  document.getElementById(id).addEventListener('input', function() {
+    this.value = this.value.replace(/[^0-9]/g, '');
+  });
+});
+
+// ================= محاسبه اصلی =================
+function calculate() {
+  const P = parseInputValue('principal');
+  const EAR = parseInputValue('earInput') / 100;
+
+  const sy = parseInt(document.getElementById('startYear').value);
+  const sm = parseInt(document.getElementById('startMonth').value);
+  const sd = parseInt(document.getElementById('startDay').value);
+
+  const ey = parseInt(document.getElementById('endYear').value);
+  const em = parseInt(document.getElementById('endMonth').value);
+  const ed = parseInt(document.getElementById('endDay').value);
+
+  if (isNaN(P) || isNaN(EAR) || isNaN(sy) || isNaN(sm) || isNaN(sd) || isNaN(ey) || isNaN(em) || isNaN(ed)) {
+    alert('لطفاً همه مقادیر را به درستی وارد کنید.');
+    return;
+  }
+  if (sm < 1 || sm > 12 || em < 1 || em > 12 || sd < 1 || sd > 31 || ed < 1 || ed > 31) {
+    alert('تاریخ وارد شده معتبر نیست.');
+    return;
+  }
+
+  const startJD = jalaliToJD(sy, sm, sd);
+  const endJD = jalaliToJD(ey, em, ed);
+
+  if (endJD < startJD) {
+    alert('تاریخ پایان نمی‌تواند قبل از تاریخ شروع باشد.');
+    return;
+  }
+
+  const days = Math.round(endJD - startJD);
+  if (days < 1) {
+    alert('مدت باید حداقل ۱ روز باشد.');
+    return;
+  }
+
+  const dailyRate = Math.pow(1 + EAR, 1 / 365) - 1;
+  const A = P * Math.pow(1 + dailyRate, days);
+  const profit = A - P;
+
+  document.getElementById('totalDays').textContent = formatNum(days) + ' روز';
+  document.getElementById('finalAmount').textContent = formatNum(A) + ' تومان';
+  document.getElementById('totalProfit').textContent = formatNum(profit) + ' تومان';
+  document.getElementById('dailyRate').textContent = (dailyRate * 100).toFixed(4) + ' ٪';
+  document.getElementById('earOut').textContent = (EAR * 100).toFixed(2) + ' ٪';
+  document.getElementById('result').classList.add('show');
+
+  const tbody = document.getElementById('tableBody');
+  tbody.innerHTML = '';
+
+  let balance = P;
+  let totalProfit = 0;
+
+  for (let d = 0; d <= days; d++) {
+    const currentJD = startJD + d;
+    const [jy, jm, jd] = jdToJalali(currentJD);
+    const dateStr = `${jy}/${String(jm).padStart(2, '0')}/${String(jd).padStart(2, '0')}`;
+
+    const startBalance = balance;
+    let dayProfit = 0;
+
+    if (d < days) {
+      dayProfit = startBalance * dailyRate;
+      balance = startBalance + dayProfit;
+      totalProfit += dayProfit;
+    } else {
+      dayProfit = 0;
+    }
+
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td>${d === 0 ? 'شروع' : d}</td>
+      <td style="direction:ltr; text-align:center;">${dateStr}</td>
+      <td>${formatNum(startBalance)}</td>
+      <td>${d === days ? '—' : formatNum(dayProfit)}</td>
+      <td>${formatNum(balance)}</td>
+    `;
+    tbody.appendChild(tr);
+  }
+
+  document.getElementById('tableWrap').classList.add('show');
+}
+</script>
+
+</body>
+</html>
