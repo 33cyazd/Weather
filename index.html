@@ -354,8 +354,125 @@
         .extra-result .table td, .extra-result .table th { white-space:nowrap; font-size:.78rem; }
         .extra-result th small { display:block; font-weight:400; }
 </style>
+<style id="dashStyle">
+html.tbl #dashRoot{display:none!important}
+html.dsh .container{display:none!important}
+html.dsh,html.dsh body{padding:0;margin:0;background:#0a1020;}
+#dashRoot{--bg:#0a1020;--bg2:#101a30;--card:#16213a;--card2:#1b2a49;--line:#2a3b61;--ink:#e8eefc;--mute:#8fa3c7;--face:#0e1628;--ring:#33466f;--needle:#ff6b3d;--acc:#38bdf8;--glass:#0c1426;
+  font-family:'Vazirmatn',sans-serif;background:radial-gradient(1200px 600px at 80% -10%,#16264a 0%,var(--bg) 60%);color:var(--ink);min-height:100vh;padding:12px 14px 30px;}
+#dashRoot.light{--bg:#e4e8ef;--bg2:#f1f3f8;--card:#ffffff;--card2:#f4f6fb;--line:#cfd6e4;--ink:#10192d;--mute:#5b6b88;--face:#f7f9fc;--ring:#c3cde0;--needle:#d9480f;--acc:#0b7fb8;--glass:#eef2f9;background:var(--bg);}
+#dashRoot select,#dashRoot input[type=number]{background:var(--card2);color:var(--ink);border:1px solid var(--line);border-radius:8px;padding:4px 8px;font-size:.8rem;max-width:230px;}
+#dashRoot .d-top{display:flex;flex-wrap:wrap;gap:8px 12px;align-items:flex-end;margin-bottom:8px;}
+#dashRoot .d-title{font-weight:800;font-size:1.15rem;margin-left:10px;}
+#dashRoot .d-title small{color:var(--mute);font-weight:500;font-size:.75rem;display:block;}
+#dashRoot label.dl{display:block;font-size:.68rem;color:var(--mute);margin-bottom:2px;}
+#dashRoot .d-btns{display:flex;flex-wrap:wrap;gap:5px;margin:2px 0 10px;}
+#dashRoot .d-btn{background:var(--card2);color:var(--ink);border:1px solid var(--line);border-radius:9px;padding:3px 10px;font-size:.76rem;cursor:pointer;font-family:inherit;}
+#dashRoot .d-btn:hover{border-color:var(--acc);} #dashRoot .d-btn.pri{background:var(--acc);color:#04121f;border-color:var(--acc);font-weight:700;}
+#dashRoot .d-time{background:linear-gradient(135deg,var(--card) 0%,var(--card2) 100%);border:1px solid var(--line);border-radius:16px;padding:10px 14px 8px;margin-bottom:10px;box-shadow:0 6px 24px rgba(0,0,0,.25);}
+#dashRoot .d-read{display:flex;flex-wrap:wrap;gap:6px 22px;align-items:center;justify-content:space-between;}
+#dashRoot .d-clock{font-size:2.4rem;font-weight:800;letter-spacing:1px;direction:ltr;line-height:1.1;color:var(--acc);}
+#dashRoot .d-date{font-size:1.05rem;font-weight:700;} #dashRoot .d-sub{font-size:.74rem;color:var(--mute);line-height:1.7;}
+#dashRoot .d-wx{font-size:2.6rem;line-height:1;text-align:center;} #dashRoot .d-wx small{display:block;font-size:.7rem;color:var(--mute);}
+#dashRoot .d-ctrl{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin:6px 0 2px;direction:ltr;}
+#dashRoot .d-ctrl .d-btn{min-width:42px;font-size:.9rem;padding:4px 10px;}
+#dashRoot .d-strip{position:relative;direction:ltr;padding:0 9px;margin-top:4px;}
+#dashRoot .d-strip svg{display:block;width:100%;height:64px;border-radius:8px;background:var(--glass);cursor:pointer;}
+#dashRoot input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:22px;background:transparent;direction:ltr;margin:2px 0 0;padding:0;}
+#dashRoot input[type=range]::-webkit-slider-runnable-track{height:6px;border-radius:4px;background:linear-gradient(90deg,#3b82f6,#22d3ee,#34d399,#fbbf24,#f87171);}
+#dashRoot input[type=range]::-moz-range-track{height:6px;border-radius:4px;background:linear-gradient(90deg,#3b82f6,#22d3ee,#34d399,#fbbf24,#f87171);}
+#dashRoot input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:20px;height:20px;border-radius:50%;background:#fff;border:3px solid var(--acc);margin-top:-7px;box-shadow:0 1px 6px rgba(0,0,0,.5);}
+#dashRoot input[type=range]::-moz-range-thumb{width:16px;height:16px;border-radius:50%;background:#fff;border:3px solid var(--acc);}
+#dashRoot .d-days{position:relative;height:30px;direction:ltr;margin:0 9px;font-size:.66rem;color:var(--mute);}
+#dashRoot .d-days span{position:absolute;transform:translateX(-50%);text-align:center;white-space:nowrap;line-height:1.25;direction:rtl;}
+#dashRoot .d-days span.cd{color:var(--acc);font-weight:700;}
+#dashRoot #dStatus{font-size:.78rem;color:var(--mute);min-height:20px;margin:2px 4px 6px;}
+#dashRoot details.d-opt{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:4px 10px;font-size:.76rem;margin-bottom:8px;}
+#dashRoot details.d-opt summary{cursor:pointer;color:var(--acc);} #dashRoot details.d-opt .chips{display:flex;flex-wrap:wrap;gap:4px 14px;padding:6px 0;}
+#dashRoot details.d-opt label{white-space:nowrap;cursor:pointer;}
+#dashRoot .d-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));grid-auto-flow:dense;gap:10px;}
+#dashRoot .d-card{background:linear-gradient(160deg,var(--card) 0%,var(--card2) 100%);border:1px solid var(--line);border-radius:14px;padding:6px 8px 8px;box-shadow:0 4px 16px rgba(0,0,0,.22);min-width:0;text-align:center;}
+#dashRoot .d-card.w2{grid-column:span 2;} #dashRoot .d-card.w3{grid-column:span 3;}
+#dashRoot .d-ct{font-size:.8rem;font-weight:700;line-height:1.3;} #dashRoot .d-ct small{display:block;font-weight:400;font-size:.62rem;color:var(--mute);direction:ltr;}
+#dashRoot .gsvg{width:100%;max-width:230px;height:auto;display:block;margin:0 auto;direction:ltr;}
+#dashRoot .tsvg{width:100%;max-width:120px;height:auto;display:block;margin:0 auto;direction:ltr;}
+#dashRoot .dv{font-size:1.35rem;font-weight:800;direction:ltr;line-height:1.2;} #dashRoot .dv small{font-size:.7rem;font-weight:500;color:var(--mute);}
+#dashRoot .d-ft{font-size:.66rem;color:var(--mute);display:flex;justify-content:space-between;gap:4px;margin-top:3px;direction:rtl;flex-wrap:wrap;}
+#dashRoot .g-face{fill:var(--face);stroke:var(--ring);stroke-width:2;} #dashRoot .t-ink{fill:var(--ink);} #dashRoot .t-mute{fill:var(--mute);}
+#dashRoot .mt-wrap{display:grid;grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:6px;} #dashRoot .mt{background:var(--glass);border-radius:10px;padding:5px 4px;border:1px solid var(--line);}
+#dashRoot .mt b{display:block;font-size:1.05rem;direction:ltr;} #dashRoot .mt span{font-size:.65rem;color:var(--mute);}
+#dashRoot table.pl{width:100%;font-size:.72rem;border-collapse:collapse;direction:ltr;} #dashRoot table.pl td,#dashRoot table.pl th{padding:2px 4px;border-bottom:1px solid var(--line);} #dashRoot table.pl th{color:var(--mute);font-weight:500;}
+#dashRoot .d-foot{margin-top:14px;text-align:center;font-size:.7rem;color:var(--mute);}
+#dashRoot .bar{height:12px;border-radius:7px;background:var(--glass);border:1px solid var(--line);overflow:hidden;direction:ltr;margin:3px 0;} #dashRoot .bar i{display:block;height:100%;}
+#dashRoot .sm-row{display:flex;align-items:center;gap:6px;font-size:.7rem;direction:rtl;} #dashRoot .sm-row .bar{flex:1;} #dashRoot .sm-row em{font-style:normal;direction:ltr;min-width:44px;text-align:left;}
+
+/* ---- طراحی فشرده و ردیف‌های کشویی افقی ---- */
+#dashRoot{padding:6px 8px 16px;}
+#dashRoot .d-top{gap:4px 8px;margin-bottom:4px;} #dashRoot .d-title{font-size:.95rem;} #dashRoot select,#dashRoot input[type=number]{padding:2px 6px;font-size:.74rem;}
+#dashRoot .d-btns{gap:4px;margin:0 0 6px;} #dashRoot .d-btn{padding:2px 8px;font-size:.7rem;border-radius:8px;}
+#dashRoot .d-time{position:sticky;top:0;z-index:30;padding:5px 10px 3px;margin-bottom:6px;border-radius:12px;backdrop-filter:blur(6px);}
+#dashRoot .d-clock{font-size:1.55rem;} #dashRoot .d-date{font-size:.88rem;} #dashRoot .d-wx{font-size:1.7rem;} #dashRoot .d-sub{font-size:.68rem;line-height:1.5;}
+#dashRoot .d-ctrl{margin:3px 0 1px;gap:4px;} #dashRoot .d-ctrl .d-btn{font-size:.76rem;padding:2px 8px;min-width:34px;}
+#dashRoot .d-strip svg{height:40px;} #dashRoot .d-days{height:24px;font-size:.6rem;}
+#dashRoot #dStatus{font-size:.72rem;min-height:14px;margin:0 4px 4px;}
+#dashRoot details.d-opt{padding:2px 8px;margin-bottom:6px;font-size:.72rem;}
+#dashRoot .d-grid{display:block;}
+#dashRoot .d-cat{background:var(--card);border:1px solid var(--line);border-radius:12px;margin-bottom:6px;overflow:hidden;}
+#dashRoot .d-cat-h{display:flex;align-items:center;gap:6px;padding:3px 10px;cursor:pointer;font-size:.78rem;font-weight:700;background:var(--card2);user-select:none;}
+#dashRoot .d-cat-h small{color:var(--mute);font-weight:400;} #dashRoot .d-cat-h .ar{margin-right:auto;display:flex;gap:3px;}
+#dashRoot .d-cat-h .ar button{background:var(--glass);color:var(--ink);border:1px solid var(--line);border-radius:6px;font-size:.62rem;padding:0 7px;cursor:pointer;}
+#dashRoot .d-cat.closed .d-row{display:none;}
+#dashRoot .d-row{display:flex;gap:6px;overflow-x:auto;overflow-y:hidden;padding:5px 6px 6px;scroll-snap-type:x proximity;cursor:grab;scrollbar-width:thin;}
+#dashRoot .d-row .d-card{flex:0 0 126px;scroll-snap-align:start;padding:3px 5px 5px;border-radius:11px;box-shadow:none;background:var(--card);}
+#dashRoot .d-row .d-card.w2{flex-basis:168px;} 
+#dashRoot .d-ct{font-size:.7rem;} #dashRoot .d-ct small{font-size:.56rem;}
+#dashRoot .gsvg{max-width:138px;} #dashRoot .tsvg{max-width:70px;}
+#dashRoot .dv{font-size:.98rem;} #dashRoot .dv small{font-size:.6rem;} #dashRoot .d-ft{font-size:.6rem;margin-top:1px;}
+#dashRoot .mt-wrap{grid-template-columns:repeat(2,1fr);gap:4px;} #dashRoot .mt b{font-size:.88rem;} #dashRoot .mt span{font-size:.58rem;}
+#dashRoot table.pl{font-size:.64rem;} #dashRoot .sm-row{font-size:.62rem;}
+#dashRoot .d-foot{margin-top:8px;font-size:.62rem;}
+</style>
+<script>document.documentElement.classList.add(/^#table/.test(location.hash)?'tbl':'dsh');</script>
 </head>
 <body>
+
+<div id="dashRoot" dir="rtl">
+  <div class="d-top">
+    <div class="d-title">🌦️ داشبورد ساعتی پیش‌بینی<small id="dSub">ایستگاه و مدل را انتخاب کنید</small></div>
+    <div><label class="dl" for="dSt">ایستگاه</label><select id="dSt"></select></div>
+    <div><label class="dl" for="dMd">مدل پیش‌بینی</label><select id="dMd"></select></div>
+    <div><label class="dl" for="dPast">روزهای گذشته</label><select id="dPast"><option value="0">بدون گذشته</option><option value="1">۱ روز</option><option value="2" selected>۲ روز</option><option value="3">۳ روز</option><option value="7">۷ روز</option></select></div>
+    <div><label class="dl" for="dWu">واحد باد</label><select id="dWu"><option value="ms" selected>m/s</option><option value="kmh">km/h</option><option value="kn">knot</option></select></div>
+    <div><button type="button" id="dGo" class="d-btn pri">دریافت با انتخاب فعلی</button></div>
+    <div><button type="button" id="dTheme" class="d-btn">☀️ / 🌙 پوسته</button></div>
+  </div>
+  <div class="d-btns" id="dBtns"></div>
+  <div class="d-time">
+    <div class="d-read">
+      <div><div class="d-clock" id="dClock">--:--</div><div class="d-date" id="dDate">—</div></div>
+      <div class="d-sub" id="dInfo">—</div>
+      <div class="d-wx" id="dWx">—<small>—</small></div>
+    </div>
+    <div class="d-ctrl">
+      <button type="button" class="d-btn" id="dB24" title="۲۴ ساعت عقب">⏮ ۲۴</button>
+      <button type="button" class="d-btn" id="dB6" title="۶ ساعت عقب">◀◀ ۶</button>
+      <button type="button" class="d-btn" id="dB1" title="۱ ساعت عقب">◀ ۱</button>
+      <button type="button" class="d-btn pri" id="dPlay" title="پخش خودکار">▶ پخش</button>
+      <button type="button" class="d-btn" id="dF1" title="۱ ساعت جلو">۱ ▶</button>
+      <button type="button" class="d-btn" id="dF6" title="۶ ساعت جلو">۶ ▶▶</button>
+      <button type="button" class="d-btn" id="dF24" title="۲۴ ساعت جلو">۲۴ ⏭</button>
+      <button type="button" class="d-btn" id="dNow">اکنون</button>
+      <span style="color:var(--mute);font-size:.72rem;direction:rtl;margin-right:auto" id="dPos"></span>
+    </div>
+    <div class="d-strip"><svg id="dStrip" viewBox="0 0 1000 64" preserveAspectRatio="none"></svg></div>
+    <div style="padding:0 0px"><input type="range" id="dSlider" min="0" max="0" value="0" step="1" disabled></div>
+    <div class="d-days" id="dDays"></div>
+  </div>
+  <div id="dStatus"></div>
+  <details class="d-opt"><summary>🎛️ کارت‌ها (انتخاب گیج‌ها؛ گروه‌های افزوده فقط با تیک‌خوردن دریافت می‌شوند)</summary><div class="chips" id="dChips"></div></details>
+  <div class="d-grid" id="dGrid"></div>
+  <div class="d-foot">داده‌ها از <a href="https://open-meteo.com" target="_blank" style="color:var(--acc)">Open-Meteo API</a> — ساعت محلی ایستگاه — جهت باد = سمتی که باد از آن می‌وزد</div>
+</div>
 
 <div class="container">
     <div class="card">
@@ -369,6 +486,7 @@
                 <button type="button" id="skewBtn" class="btn btn-sm btn-outline-dark"><span aria-hidden="true">🌀</span> اسکیوتی</button>
                 <button type="button" id="meteoBtn" class="btn btn-sm btn-outline-dark"><span aria-hidden="true">📈</span> نمودار و میتئوگرام</button>
                 <button type="button" id="roseBtn" class="btn btn-sm btn-outline-dark"><span aria-hidden="true">🧭</span> گلباد</button>
+                <button type="button" id="pickBtn" class="btn btn-sm btn-outline-dark"><span aria-hidden="true">📍</span> مکان دلخواه</button>
                 <button type="button" id="archiveBtn" class="btn btn-sm btn-outline-dark"><span aria-hidden="true">🗄️</span> آرشیو ۹۹ روز</button>
                 <button type="button" id="healthBtn" class="btn btn-sm btn-outline-dark"><span aria-hidden="true">🩺</span> سلامت مدل‌ها</button>
                 <button type="button" id="realLstBtn" class="btn btn-sm btn-outline-dark">دمای واقعی زمین</button>
@@ -4888,6 +5006,640 @@ document.addEventListener('DOMContentLoaded', function () {
         win.document.close();
     }
     document.getElementById('roseBtn').addEventListener('click', openWindRoseWindow);
+
+    // ===================== پوستهٔ روز/شب سراسری (همهٔ پنجره‌ها) =====================
+    const YZ_THEME_KEY = 'yzTheme';
+    const YZ_THEME_CSS = 'html.yz-night{filter:invert(.92) hue-rotate(180deg);background:#fff;}#yzThemeBtn{position:fixed;left:8px;bottom:8px;z-index:2147483647;border:1px solid #888;background:#f2f2f2;color:#111;border-radius:18px;padding:3px 12px;font:12px Vazirmatn,Tahoma,sans-serif;cursor:pointer;opacity:.92;}';
+    const YZ_THEME_JS = '(function(){var K="yzTheme",d=document,h=d.documentElement,b=d.createElement("button");b.id="yzThemeBtn";b.type="button";function g(){var t=null;try{t=localStorage.getItem(K)}catch(e){}try{if(!t&&window.opener)t=window.opener.__yzTheme}catch(e){}return t||"day"}function a(t){h.classList.toggle("yz-night",t==="night");b.textContent=t==="night"?"☀️ حالت روز":"🌙 حالت شب"}b.onclick=function(){var t=h.classList.contains("yz-night")?"day":"night";a(t);try{localStorage.setItem(K,t)}catch(e){}try{window.opener&&window.opener.__yzSetTheme&&window.opener.__yzSetTheme(t)}catch(e){}};d.body.appendChild(b);a(g());window.addEventListener("storage",function(e){if(e.key===K&&e.newValue)a(e.newValue)})})();';
+    const YZ_INJECT = '<style id="yzThemeCss">' + YZ_THEME_CSS + '</style><script>' + YZ_THEME_JS + '<\/script>';
+    function yzThemeGet() { let t = null; try { t = localStorage.getItem(YZ_THEME_KEY); } catch (e) {} return t || window.__yzTheme || null; }
+    window.__yzTheme = yzThemeGet();
+    window.__yzSetTheme = function (t) { window.__yzTheme = t; try { localStorage.setItem(YZ_THEME_KEY, t); } catch (e) {} if (window.__yzThemeHook) window.__yzThemeHook(t); };
+    // هر پنجرهٔ خالی که باز می‌شود، هنگام نوشتن HTML دکمهٔ روز/شب را می‌گیرد
+    (function patchOpen() {
+        const wo = window.open.bind(window);
+        window.open = function (u, t, f) {
+            const w = wo(u, t, f);
+            try {
+                if (w && (!u || u === 'about:blank')) {
+                    const d = w.document, ow = d.write.bind(d); let done = false;
+                    d.write = function (h) {
+                        if (!done && typeof h === 'string') { const i = h.lastIndexOf('</body>'); if (i >= 0) { done = true; h = h.slice(0, i) + YZ_INJECT + h.slice(i); } }
+                        return ow(h);
+                    };
+                }
+            } catch (e) {}
+            return w;
+        };
+    })();
+    // ===================== مکان‌های دلخواه (حداکثر ۵) — محدودهٔ استان یزد + ۲۵ کیلومتر =====================
+    // مرز استان: داده‌های OpenStreetMap (© OpenStreetMap contributors، ODbL)، ساده‌شده؛ قالب [چندضلعی][حلقه][طول،عرض]
+    const YZ_POLY = [[[[52.8011,31.4949],[52.8058,31.4871],[52.8183,31.4796],[52.8486,31.4476],[52.8647,31.4371],[52.9069,31.4227],[52.9347,31.4049],[52.9508,31.3899],[52.9627,31.3746],[52.9688,31.3618],[52.9783,31.3227],[52.9777,31.3082],[52.9716,31.2771],[52.9555,31.2507],[52.9458,31.241],[52.9288,31.2346],[52.8688,31.2238],[52.8505,31.2143],[52.8316,31.1913],[52.8336,31.179],[52.8394,31.1718],[52.8552,31.161],[52.8766,31.154],[52.8877,31.1471],[52.9119,31.1213],[52.9249,31.0873],[52.9286,31.0307],[52.9429,31.012],[52.9534,31.0045],[52.9747,30.9984],[53.0236,30.9933],[53.0516,30.9864],[53.1372,30.9388],[53.218,30.9018],[53.243,30.8935],[53.2747,30.8746],[53.3636,30.8332],[53.3955,30.8121],[53.4444,30.7515],[53.4586,30.7374],[53.4711,30.7315],[53.5291,30.7179],[53.65,30.7074],[53.735,30.689],[53.8072,30.6695],[53.8315,30.6564],[53.8477,30.6447],[53.8616,30.6299],[53.8778,30.6041],[53.9265,30.4868],[53.9143,30.4324],[53.92,30.4118],[53.9341,30.3872],[53.9366,30.3785],[53.9366,30.2981],[53.9232,30.2471],[53.9191,30.2225],[53.9051,30.2382],[53.8985,30.2317],[53.904,30.2239],[53.8796,30.2253],[53.8811,30.2147],[53.8893,30.2009],[53.9144,30.2028],[53.9052,30.1891],[53.9042,30.1624],[53.8705,30.1714],[53.8701,30.1663],[53.8897,30.134],[53.8876,30.1217],[53.8971,30.097],[53.9299,30.0621],[53.9304,30.0592],[53.9802,30.0318],[53.9999,30.0155],[54.0238,30.0027],[54.0362,29.9972],[54.0575,29.994],[54.0958,29.9823],[54.1092,29.9767],[54.1175,29.9688],[54.114,29.9071],[54.1059,29.8772],[54.0973,29.7886],[54.1176,29.7788],[54.1295,29.7693],[54.1561,29.739],[54.1715,29.7096],[54.1849,29.6674],[54.207,29.6319],[54.246,29.6082],[54.2659,29.6004],[54.3274,29.6196],[54.353,29.6244],[54.3879,29.6207],[54.4284,29.6232],[54.4627,29.6211],[54.4846,29.6336],[54.4906,29.6348],[54.5406,29.6297],[54.5883,29.6134],[54.5814,29.7037],[54.5752,29.7385],[54.5739,29.7671],[54.5663,29.8266],[54.5672,29.8462],[54.5422,29.9109],[54.5519,29.9721],[54.5474,29.9998],[54.5489,30.0142],[54.5346,30.0801],[54.5307,30.2217],[54.5332,30.2257],[54.5333,30.2346],[54.5303,30.2377],[54.5284,30.2459],[54.5301,30.2588],[54.5227,30.268],[54.4987,30.2779],[54.49,30.2764],[54.4807,30.2788],[54.453,30.2958],[54.4335,30.3118],[54.3976,30.343],[54.3806,30.3687],[54.3779,30.38],[54.3703,30.3933],[54.4464,30.4554],[54.5286,30.5318],[54.5505,30.5652],[54.5595,30.5826],[54.5631,30.5968],[54.5656,30.6199],[54.5646,30.6536],[54.553,30.7027],[54.5507,30.7685],[54.5445,30.8047],[54.5439,30.8313],[54.5366,30.8694],[54.5407,30.8838],[54.5407,30.8966],[54.5286,30.9415],[54.5268,31.0184],[54.5578,31.0246],[54.6128,31.0429],[54.6684,31.0532],[54.7117,31.066],[54.9153,31.0285],[54.9464,31.0282],[55.0217,31.0563],[55.0767,31.0657],[55.1337,31.0724],[55.1889,31.0851],[55.2678,31.1124],[55.3995,31.1518],[55.4606,31.176],[55.4948,31.186],[55.6009,31.2438],[55.6781,31.2546],[55.7181,31.2665],[55.7401,31.2746],[55.8456,31.3252],[55.9348,31.3732],[55.9451,31.3907],[55.9565,31.4196],[55.964,31.4307],[55.9965,31.4485],[56.0129,31.4649],[56.0179,31.476],[56.0198,31.4877],[56.0212,31.5357],[56.024,31.5543],[56.0293,31.5649],[56.0351,31.5704],[56.0935,31.5873],[56.1212,31.5907],[56.1393,31.5807],[56.1511,31.5601],[56.1605,31.5526],[56.1787,31.5483],[56.2237,31.5591],[56.2488,31.5593],[56.2581,31.5686],[56.2688,31.5921],[56.4353,31.6517],[56.5093,31.6716],[56.5698,31.6977],[56.5745,31.7146],[56.5777,31.7418],[56.5735,31.748],[56.5774,31.8215],[56.5841,31.859],[56.5874,31.8627],[56.5923,31.8956],[56.6023,31.925],[56.5982,31.9541],[56.6032,31.9904],[56.5968,31.9996],[56.6162,32.0329],[56.6529,32.076],[56.6546,32.0813],[56.6535,32.0874],[56.5912,32.1741],[56.5437,32.2316],[56.4934,32.2818],[56.4801,32.2907],[56.4098,32.363],[56.3623,32.4057],[56.3115,32.4668],[56.2779,32.5124],[56.2404,32.5766],[56.2215,32.5938],[56.1998,32.6093],[56.1118,32.6613],[56.0856,32.6818],[56.0029,32.7221],[55.972,32.7396],[55.9373,32.7482],[55.8765,32.7532],[55.8359,32.7671],[55.8229,32.7741],[55.8076,32.7874],[55.7823,32.8152],[55.749,32.8697],[55.6693,32.9741],[55.4677,33.3064],[55.4169,33.3758],[55.405,33.3825],[55.3874,33.3577],[55.3803,33.3635],[55.3759,33.3633],[55.2698,33.3435],[55.2226,33.3241],[55.1834,33.2985],[55.1045,33.2363],[55.0773,33.2119],[55.0195,33.1505],[54.9917,33.1257],[54.9128,33.1752],[54.8973,33.1802],[54.8778,33.1716],[54.8551,33.1377],[54.8278,33.1348],[54.8175,33.1262],[54.8086,33.114],[54.8063,33.1022],[54.8001,33.0954],[54.7821,33.0936],[54.7742,33.0823],[54.7796,33.0623],[54.7497,33.0124],[54.7384,32.9982],[54.7362,32.9572],[54.6572,32.9658],[54.6058,32.9684],[54.5165,32.9559],[54.3146,32.9201],[54.2882,32.9134],[54.2493,32.8991],[54.1713,32.8776],[54.0617,32.8408],[54.02,32.8257],[53.9455,32.7923],[53.7542,32.7273],[53.7179,32.7172],[53.5222,32.6306],[53.45,32.6024],[53.3282,32.6491],[53.3032,32.6543],[53.2789,32.6512],[53.2499,32.6419],[53.217,32.6003],[53.2096,32.5289],[53.1913,32.5222],[53.1307,32.5319],[53.1063,32.5326],[53.0833,32.5284],[53.0685,32.5409],[53.0338,32.5358],[53.0115,32.5143],[53.0234,32.4824],[53.0219,32.4454],[53.0295,32.3212],[53.0249,32.2749],[53.0355,32.1067],[53.0441,32.0488],[53.0404,32.0344],[53.0523,32.0295],[53.0512,32.0051],[53.035,31.9961],[53.0004,31.8668],[53.009,31.8273],[53.041,31.7473],[53.0475,31.7397],[53.0613,31.7301],[53.1402,31.6804],[53.1772,31.6413],[53.198,31.6135],[53.2039,31.5968],[53.2036,31.5902],[53.1944,31.5732],[53.1355,31.5424],[53.0597,31.5115],[52.9977,31.4963],[52.9461,31.4902],[52.9016,31.489],[52.8577,31.4899],[52.8011,31.4949]]]];
+    const YZ_MAXKM = 25, YZ_MAXN = 5, YZ_KEY = 'yzCustomPlaces';
+    function yzInRing(lat, lon, ring) {
+        let c = false;
+        for (let i = 0, j = ring.length - 1; i < ring.length; j = i++) {
+            const xi = ring[i][0], yi = ring[i][1], xj = ring[j][0], yj = ring[j][1];
+            if (((yi > lat) !== (yj > lat)) && (lon < (xj - xi) * (lat - yi) / (yj - yi) + xi)) c = !c;
+        }
+        return c;
+    }
+    function yzInside(lat, lon) {
+        for (let p = 0; p < YZ_POLY.length; p++) {
+            const rings = YZ_POLY[p];
+            if (!yzInRing(lat, lon, rings[0])) continue;
+            let hole = false; for (let h = 1; h < rings.length; h++) if (yzInRing(lat, lon, rings[h])) { hole = true; break; }
+            if (!hole) return true;
+        }
+        return false;
+    }
+    function yzDistKm(lat, lon) {
+        const kx = 111.32 * Math.cos(lat * Math.PI / 180), ky = 110.57; let best = Infinity;
+        YZ_POLY.forEach(rings => rings.forEach(ring => {
+            for (let i = 0, j = ring.length - 1; i < ring.length; j = i++) {
+                const ax = (ring[j][0] - lon) * kx, ay = (ring[j][1] - lat) * ky, bx = (ring[i][0] - lon) * kx, by = (ring[i][1] - lat) * ky;
+                const dx = bx - ax, dy = by - ay, L = dx * dx + dy * dy;
+                let t = L > 0 ? -(ax * dx + ay * dy) / L : 0; t = Math.max(0, Math.min(1, t));
+                const px = ax + t * dx, py = ay + t * dy, d = Math.sqrt(px * px + py * py);
+                if (d < best) best = d;
+            }
+        }));
+        return best;
+    }
+    function yzCheck(lat, lon) {
+        if (!isFinite(lat) || !isFinite(lon)) return { ok: false, inside: false, d: Infinity };
+        const inside = yzInside(lat, lon), d = inside ? 0 : yzDistKm(lat, lon);
+        return { ok: inside || d <= YZ_MAXKM, inside: inside, d: d };
+    }
+    function yzLoad() {
+        let a = null;
+        try { a = JSON.parse(localStorage.getItem(YZ_KEY) || 'null'); } catch (e) { a = null; }
+        if (!Array.isArray(a)) a = window.__yzMem || [];
+        return a.filter(x => x && isFinite(x.lat) && isFinite(x.lon) && yzCheck(+x.lat, +x.lon).ok).slice(0, YZ_MAXN).map(x => ({ lat: +(+x.lat).toFixed(4), lon: +(+x.lon).toFixed(4), name: String(x.name || 'مکان دلخواه').slice(0, 40) }));
+    }
+    function yzApplyOptions() {
+        const old = citySelect.querySelector('optgroup[data-yz]'); if (old) old.remove();
+        const list = yzLoad(); if (!list.length) return;
+        const keep = citySelect.value, used = new Set(Array.prototype.map.call(citySelect.options, o => o.value));
+        const g = document.createElement('optgroup'); g.setAttribute('data-yz', '1'); g.label = '📍 مکان‌های دلخواه';
+        list.forEach(p => { const v = p.lat.toFixed(4) + ',' + p.lon.toFixed(4); if (used.has(v)) return; const o = document.createElement('option'); o.value = v; o.textContent = '📍 ' + p.name; g.appendChild(o); });
+        citySelect.appendChild(g);
+        if (Array.prototype.some.call(citySelect.options, o => o.value === keep)) citySelect.value = keep;
+    }
+    window.__yzGetCustom = yzLoad;
+    window.__yzCheck = yzCheck;
+    window.__yzSetCustom = function (arr) {
+        const a = (arr || []).filter(x => x && yzCheck(+x.lat, +x.lon).ok).slice(0, YZ_MAXN).map(x => ({ lat: +(+x.lat).toFixed(4), lon: +(+x.lon).toFixed(4), name: String(x.name || 'مکان دلخواه').slice(0, 40) }));
+        window.__yzMem = a; try { localStorage.setItem(YZ_KEY, JSON.stringify(a)); } catch (e) {}
+        yzApplyOptions(); if (window.__yzDashRefresh) window.__yzDashRefresh();
+        return a;
+    };
+    window.__yzSelect = function (v) {
+        const ds = document.getElementById('dSt');
+        if (ds && ds.offsetParent !== null) { ds.value = v; ds.dispatchEvent(new Event('change')); }
+        else { citySelect.value = v; citySelect.dispatchEvent(new Event('change')); }
+    };
+    yzApplyOptions();
+
+    // ===================== پنجرهٔ «مکان دلخواه» روی نقشه =====================
+    function openPickWindow() {
+        const win = window.open('', '_blank');
+        if (!win) { alert('اجازهٔ باز شدن پنجرهٔ جدید داده نشد (مسدودکنندهٔ پاپ‌آپ).'); return; }
+        const html = `<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>انتخاب مکان دلخواه روی نقشه</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.css">
+<link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet">
+<style>
+  html,body{height:100%;margin:0;} body{font-family:'Vazirmatn',sans-serif;background:#d9d9d9;color:#000;display:flex;flex-direction:column;}
+  .top{padding:6px 12px;font-size:.84rem;line-height:1.8;background:#e9e9e9;border-bottom:1px solid #bbb;}
+  .top b{font-size:.95rem;} .lg i{display:inline-block;width:16px;height:10px;margin:0 3px 0 6px;vertical-align:middle;border:1px solid #666;}
+  #wrap{flex:1;display:flex;min-height:0;} #map{flex:1;min-height:360px;} #side{width:320px;overflow:auto;padding:8px 10px;background:#f1f1f1;border-right:1px solid #bbb;font-size:.8rem;}
+  @media(max-width:820px){#wrap{flex-direction:column;} #side{width:auto;max-height:42vh;border-right:0;border-top:1px solid #bbb;}}
+  .pin{background:#f59e0b;color:#111;border:2px solid #fff;border-radius:50%;width:26px;height:26px;line-height:22px;text-align:center;font-weight:800;box-shadow:0 1px 5px rgba(0,0,0,.55);font-size:12px;}
+  .pl{background:#fff;border:1px solid #c9c9c9;border-radius:9px;padding:6px 8px;margin-bottom:7px;}
+  .pl input[type=text]{width:100%;box-sizing:border-box;font:inherit;padding:2px 6px;border:1px solid #bbb;border-radius:6px;margin:2px 0;}
+  .pl .r{display:flex;gap:6px;align-items:center;flex-wrap:wrap;margin-top:3px;} .pl small{color:#555;direction:ltr;display:inline-block;}
+  button{font:inherit;font-size:.76rem;border:1px solid #999;background:#f7f7f7;border-radius:7px;padding:2px 9px;cursor:pointer;} button.p{background:#0284c7;color:#fff;border-color:#0284c7;}
+  #msg{min-height:22px;font-size:.78rem;margin:2px 0 6px;} #msg.err{color:#b91c1c;font-weight:700;} #msg.ok{color:#15803d;}
+  .co{display:flex;gap:5px;margin:6px 0;} .co input{width:50%;box-sizing:border-box;font:inherit;padding:2px 5px;border:1px solid #bbb;border-radius:6px;direction:ltr;}
+</style>
+</head>
+<body>
+  <div class="top"><b>📍 انتخاب مکان دلخواه روی نقشه</b> — با کلیک روی نقشه تا <b>۵ مکان</b> اضافه کنید؛ مکان‌ها در همهٔ پنجره‌ها (داشبورد، جدول تبدیل، نمودار، گلباد، رتبه‌بندی و...) مثل ایستگاه‌ها در فهرست ایستگاه‌ها ظاهر می‌شوند.
+    <div class="lg"><span><i style="background:rgba(14,165,233,.35)"></i>داخل استان یزد</span><span><i style="background:rgba(245,158,11,.5)"></i>تا ۲۵ کیلومتر بیرون از مرز (مجاز)</span><span><i style="background:#fff"></i>بیرون از محدوده (غیرمجاز)</span></div></div>
+  <div id="wrap"><div id="map"></div>
+    <div id="side">
+      <div><b id="cnt">۰ از ۵</b> <button id="clr" style="margin-right:8px">حذف همه</button></div>
+      <div id="msg"></div>
+      <div class="co"><input id="la" type="number" step="0.0001" placeholder="عرض (lat) مثلاً 31.9"><input id="lo" type="number" step="0.0001" placeholder="طول (lon) مثلاً 54.4"></div>
+      <button id="addc" class="p" style="width:100%;margin-bottom:8px">افزودن با مختصات</button>
+      <div id="list"></div>
+      <div style="color:#666;font-size:.7rem;margin-top:8px">مرز استان: OpenStreetMap contributors (ODbL)، ساده‌شده. نشانگر را می‌توان با کشیدن جابه‌جا کرد.</div>
+    </div>
+  </div>
+<script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js"><\/script>
+<script>
+  var POLY = ${JSON.stringify(YZ_POLY)}, MAXKM = 25, MAXN = 5;
+  var $ = function(id){ return document.getElementById(id); };
+  function inRing(lat, lon, ring){ var c = false; for (var i = 0, j = ring.length - 1; i < ring.length; j = i++) { var xi = ring[i][0], yi = ring[i][1], xj = ring[j][0], yj = ring[j][1]; if (((yi > lat) !== (yj > lat)) && (lon < (xj - xi) * (lat - yi) / (yj - yi) + xi)) c = !c; } return c; }
+  function inside(lat, lon){ for (var p = 0; p < POLY.length; p++) { var rs = POLY[p]; if (!inRing(lat, lon, rs[0])) continue; var hole = false; for (var h = 1; h < rs.length; h++) if (inRing(lat, lon, rs[h])) { hole = true; break; } if (!hole) return true; } return false; }
+  function distKm(lat, lon){
+    var kx = 111.32 * Math.cos(lat * Math.PI / 180), ky = 110.57, best = Infinity;
+    POLY.forEach(function(rs){ rs.forEach(function(ring){ for (var i = 0, j = ring.length - 1; i < ring.length; j = i++) {
+      var ax = (ring[j][0] - lon) * kx, ay = (ring[j][1] - lat) * ky, bx = (ring[i][0] - lon) * kx, by = (ring[i][1] - lat) * ky, dx = bx - ax, dy = by - ay, L2 = dx * dx + dy * dy;
+      var t = L2 > 0 ? -(ax * dx + ay * dy) / L2 : 0; t = Math.max(0, Math.min(1, t)); var px = ax + t * dx, py = ay + t * dy, d = Math.sqrt(px * px + py * py); if (d < best) best = d; } }); });
+    return best;
+  }
+  function chk(lat, lon){ var i = inside(lat, lon), d = i ? 0 : distKm(lat, lon); return { ok: i || d <= MAXKM, inside: i, d: d }; }
+  var OP = null; try { OP = window.opener; } catch (e) {}
+  var places = (OP && OP.__yzGetCustom) ? OP.__yzGetCustom() : [], markers = [], msgT = null, map = null;
+  function msg(t, k){ var m = $('msg'); m.textContent = t; m.className = k || ''; clearTimeout(msgT); msgT = setTimeout(function(){ m.textContent = ''; m.className = ''; }, 7000); }
+  function persist(){ if (OP && OP.__yzSetCustom) { try { places = OP.__yzSetCustom(places); } catch (e) {} } else msg('پنجرهٔ اصلی در دسترس نیست؛ ذخیره نشد.', 'err'); }
+  function stText(p){ var r = chk(p.lat, p.lon); return r.inside ? 'داخل استان یزد' : ('≈ ' + r.d.toFixed(1) + ' km بیرون از مرز استان'); }
+  function addPlace(lat, lon, name){
+    var r = chk(lat, lon);
+    if (!r.ok) { msg('این نقطه خارج از محدودهٔ مجاز است (' + (isFinite(r.d) ? r.d.toFixed(0) : '؟') + ' کیلومتر تا مرز استان؛ حداکثر مجاز ' + MAXKM + ').', 'err'); return; }
+    if (places.length >= MAXN) { msg('حداکثر ' + MAXN + ' مکان مجاز است؛ ابتدا یکی را حذف کنید.', 'err'); return; }
+    var n = 1; while (places.some(function(p){ return p.name === 'مکان دلخواه ' + n; })) n++;
+    places.push({ lat: +lat.toFixed(4), lon: +lon.toFixed(4), name: name || ('مکان دلخواه ' + n) }); persist(); render(); msg('مکان افزوده شد.', 'ok');
+  }
+  function render(){
+    markers.forEach(function(m){ map && map.removeLayer(m); }); markers = [];
+    var list = $('list'); list.innerHTML = '';
+    places.forEach(function(p, i){
+      if (map && typeof L !== 'undefined') {
+        var mk = L.marker([p.lat, p.lon], { draggable: true, icon: L.divIcon({ className: '', html: '<div class="pin">' + (i + 1) + '</div>', iconSize: [26, 26], iconAnchor: [13, 13] }) }).addTo(map).bindTooltip(p.name);
+        mk.on('dragend', function(){ var ll = mk.getLatLng(), r = chk(ll.lat, ll.lng); if (!r.ok) { mk.setLatLng([p.lat, p.lon]); msg('این موقعیت خارج از محدودهٔ مجاز است.', 'err'); return; } p.lat = +ll.lat.toFixed(4); p.lon = +ll.lng.toFixed(4); persist(); render(); });
+        markers.push(mk);
+      }
+      var d = document.createElement('div'); d.className = 'pl';
+      d.innerHTML = '<b>' + (i + 1) + '.</b> <input type="text" maxlength="40" value="">' + '<small>' + p.lat.toFixed(4) + ', ' + p.lon.toFixed(4) + '</small> — <span>' + stText(p) + '</span><div class="r"><button class="p">📊 نمایش در داشبورد</button><button>🎯 روی نقشه</button><button>🗑 حذف</button></div>';
+      var inp = d.querySelector('input'); inp.value = p.name;
+      inp.addEventListener('change', function(){ p.name = inp.value.trim() || ('مکان دلخواه ' + (i + 1)); persist(); render(); });
+      var bs = d.querySelectorAll('button');
+      bs[0].addEventListener('click', function(){ var v = p.lat.toFixed(4) + ',' + p.lon.toFixed(4); try { OP.__yzSelect(v); msg('در پنجرهٔ اصلی انتخاب شد؛ ۱ ثانیه بعد داده دریافت می‌شود.', 'ok'); } catch (e) { msg('پنجرهٔ اصلی در دسترس نیست.', 'err'); } });
+      bs[1].addEventListener('click', function(){ if (map) map.setView([p.lat, p.lon], Math.max(map.getZoom(), 9)); });
+      bs[2].addEventListener('click', function(){ places.splice(i, 1); persist(); render(); });
+      list.appendChild(d);
+    });
+    $('cnt').textContent = places.length + ' از ' + MAXN + ' مکان';
+  }
+  function merc(l){ return Math.log(Math.tan(Math.PI / 4 + l * Math.PI / 360)); }
+  function unmerc(y){ return (2 * Math.atan(Math.exp(y)) - Math.PI / 2) * 180 / Math.PI; }
+  function buildMask(){
+    var minLat = 90, maxLat = -90, minLon = 180, maxLon = -180;
+    POLY.forEach(function(rs){ rs[0].forEach(function(q){ if (q[1] < minLat) minLat = q[1]; if (q[1] > maxLat) maxLat = q[1]; if (q[0] < minLon) minLon = q[0]; if (q[0] > maxLon) maxLon = q[0]; }); });
+    var south = minLat - 0.35, north = maxLat + 0.35, west = minLon - 0.4, east = maxLon + 0.4, W = 240, H = 240;
+    var cv = document.createElement('canvas'); cv.width = W; cv.height = H; var ctx = cv.getContext('2d'), img = ctx.createImageData(W, H), yN = merc(north), yS = merc(south);
+    for (var row = 0; row < H; row++) {
+      var lat = unmerc(yN - (row + 0.5) / H * (yN - yS));
+      for (var col = 0; col < W; col++) {
+        var lon = west + (col + 0.5) / W * (east - west);
+        if (lat < minLat - 0.3 || lat > maxLat + 0.3 || lon < minLon - 0.36 || lon > maxLon + 0.36) continue;
+        var ins = inside(lat, lon), o = (row * W + col) * 4;
+        if (ins) { img.data[o] = 14; img.data[o + 1] = 165; img.data[o + 2] = 233; img.data[o + 3] = 55; }
+        else if (distKm(lat, lon) <= MAXKM) { img.data[o] = 245; img.data[o + 1] = 158; img.data[o + 2] = 11; img.data[o + 3] = 95; }
+      }
+    }
+    ctx.putImageData(img, 0, 0);
+    L.imageOverlay(cv.toDataURL(), [[south, west], [north, east]], { interactive: false }).addTo(map);
+    POLY.forEach(function(rs){ L.polygon(rs.map(function(r){ return r.map(function(q){ return [q[1], q[0]]; }); }), { color: '#0369a1', weight: 2, fill: false, interactive: false }).addTo(map); });
+    map.fitBounds([[minLat - 0.3, minLon - 0.35], [maxLat + 0.3, maxLon + 0.35]]);
+  }
+  if (typeof L === 'undefined') { $('map').innerHTML = '<div style="padding:20px">بارگیری نقشه (Leaflet) ممکن نشد؛ اتصال اینترنت را بررسی کنید. افزودن با مختصات همچنان کار می‌کند.</div>'; }
+  else {
+    map = L.map('map').setView([31.9, 54.4], 7);
+    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 18, attribution: '© OpenStreetMap contributors' }).addTo(map);
+    map.on('click', function(e){ addPlace(e.latlng.lat, e.latlng.lng); });
+    setTimeout(buildMask, 30);
+  }
+  $('addc').addEventListener('click', function(){ var la = parseFloat($('la').value), lo = parseFloat($('lo').value); if (!isFinite(la) || !isFinite(lo)) { msg('عرض و طول جغرافیایی را درست وارد کنید.', 'err'); return; } addPlace(la, lo); if (map) map.setView([la, lo], Math.max(map.getZoom(), 9)); });
+  $('clr').addEventListener('click', function(){ if (places.length && confirm('همهٔ مکان‌های دلخواه حذف شوند؟')) { places = []; persist(); render(); } });
+  render();
+<\/script>
+</body>
+</html>`;
+        win.document.open();
+        win.document.write(html);
+        win.document.close();
+    }
+    document.getElementById('pickBtn').addEventListener('click', openPickWindow);
+
+    // ===================== داشبورد ساعتی (صفحهٔ اصلی) + پنجرهٔ «جدول تبدیل» =====================
+    (function dashboardInit() {
+        const isTable = /^#table/.test(location.hash);
+        // ---- حالت «جدول تبدیل»: همان صفحهٔ قبلی با عنوان تازه؛ ایستگاه/مدل از نشانی گرفته می‌شود (بدون بارگیری خودکار)
+        if (isTable) {
+            document.title = 'جدول تبدیل';
+            const sp = document.querySelector('.main-header h4 > span');
+            if (sp) sp.insertAdjacentHTML('beforeend', ' — <b>جدول تبدیل</b>');
+            const m = /^#table=([^;]*);?(.*)$/.exec(decodeURIComponent(location.hash));
+            if (m) {
+                if (m[1] && Array.prototype.some.call(citySelect.options, o => o.value === m[1])) { citySelect.value = m[1]; try { showCityCoords(); } catch (e) {} }
+                if (m[2] && Array.prototype.some.call(modelSelect.options, o => o.value === m[2])) modelSelect.value = m[2];
+            }
+            try { const st = document.createElement('style'); st.textContent = YZ_THEME_CSS; document.head.appendChild(st); new Function(YZ_THEME_JS)(); } catch (e) {}
+            return;
+        }
+        const R = document.getElementById('dashRoot');
+        if (!R) return;
+        document.title = 'داشبورد ساعتی پیش‌بینی هوا';
+        window.__yzThemeHook = t => R.classList.toggle('light', t === 'day');
+        window.__yzThemeHook(yzThemeGet() || 'night');
+        window.addEventListener('storage', e => { if (e.key === YZ_THEME_KEY && e.newValue) window.__yzThemeHook(e.newValue); });
+        const $ = id => document.getElementById(id);
+        const stLabels = stationLabelMap(), mdLabels = modelLabelMap();
+
+        // ---------- ابزارهای عددی و هندسی ----------
+        const f1 = (v, d) => (v === null || v === undefined || isNaN(v)) ? '—' : (+v).toFixed(d === undefined ? 1 : d);
+        const sg = (v, d) => (v === null || v === undefined || isNaN(v)) ? '—' : ((v > 0.049 ? '+' : '') + v.toFixed(d === undefined ? 1 : d));
+        const clampv = (x, a, b) => Math.max(a, Math.min(b, x));
+        function pt(cx, cy, r, a) { const t = a * Math.PI / 180; return [cx + r * Math.sin(t), cy - r * Math.cos(t)]; }
+        function arcP(cx, cy, r, a0, a1) { const p0 = pt(cx, cy, r, a0), p1 = pt(cx, cy, r, a1); return 'M' + p0[0].toFixed(1) + ' ' + p0[1].toFixed(1) + 'A' + r + ' ' + r + ' 0 ' + ((a1 - a0) > 180 ? 1 : 0) + ' 1 ' + p1[0].toFixed(1) + ' ' + p1[1].toFixed(1); }
+        function niceStep(range, n) { const raw = range / n, p = Math.pow(10, Math.floor(Math.log(raw) / Math.LN10)), f = raw / p; return (f <= 1 ? 1 : f <= 2 ? 2 : f <= 5 ? 5 : 10) * p; }
+        const rb = (v, lo, hi) => rainbow(hi > lo ? (v - lo) / (hi - lo) : 0.5, false).bg;
+        const COMP = ['N', 'NNE', 'NE', 'ENE', 'E', 'ESE', 'SE', 'SSE', 'S', 'SSW', 'SW', 'WSW', 'W', 'WNW', 'NW', 'NNW'];
+        const WU = { ms: { f: 1 / 3.6, u: 'm/s', tiers: [10, 20, 30, 40] }, kmh: { f: 1, u: 'km/h', tiers: [40, 80, 120, 160] }, kn: { f: 1 / 1.852, u: 'knot', tiers: [20, 40, 60, 80] } };
+        const wu = () => WU[$('dWu').value];
+
+        // ---------- وضعیت و داده ----------
+        const BASE = ['temperature_2m', 'dew_point_2m', 'apparent_temperature', 'wet_bulb_temperature_2m', 'relative_humidity_2m', 'vapour_pressure_deficit', 'precipitation', 'snowfall', 'precipitation_probability', 'weather_code', 'is_day',
+            'cloud_cover', 'cloud_cover_low', 'cloud_cover_mid', 'cloud_cover_high', 'visibility', 'wind_speed_10m', 'wind_direction_10m', 'wind_gusts_10m', 'pressure_msl', 'surface_pressure',
+            'shortwave_radiation', 'direct_radiation', 'diffuse_radiation', 'direct_normal_irradiance', 'uv_index', 'sunshine_duration', 'et0_fao_evapotranspiration', 'cape', 'freezing_level_height',
+            'soil_temperature_0cm', 'soil_temperature_6cm', 'soil_temperature_18cm', 'soil_temperature_54cm'];
+        const GROUPS = {
+            soilm: ['soil_moisture_0_to_1cm', 'soil_moisture_1_to_3cm', 'soil_moisture_3_to_9cm', 'soil_moisture_9_to_27cm', 'soil_moisture_27_to_81cm'],
+            windlev: ['wind_speed_80m', 'wind_speed_120m', 'wind_speed_180m', 'wind_direction_80m', 'wind_direction_120m', 'wind_direction_180m'],
+            plev: ['temperature_850hPa', 'temperature_700hPa', 'temperature_500hPa', 'relative_humidity_850hPa', 'relative_humidity_700hPa', 'relative_humidity_500hPa', 'wind_speed_850hPa', 'wind_speed_700hPa', 'wind_speed_500hPa', 'wind_speed_250hPa', 'geopotential_height_500hPa'],
+            pbl: ['lifted_index', 'convective_inhibition', 'boundary_layer_height']
+        };
+        let D = null, cur = 0, seq = 0, loadTimer = null, playT = null, rafPending = false;
+        const store = {};
+        const VAL = k => { if (!D) return null; const a = D.H[k]; if (!a) return null; const v = a[cur]; return (v === undefined || v === null || isNaN(v)) ? null : +v; };
+        const SER = k => (D && D.H[k]) ? D.H[k] : [];
+        const dayOf = i => D.times[i].substring(0, 10);
+        function dayRange(k) {
+            if (!D || !D.H[k]) return null; const d = dayOf(cur); let lo = null, hi = null, li = 0, hiI = 0;
+            for (let i = 0; i < D.times.length; i++) { if (dayOf(i) !== d) continue; const v = D.H[k][i]; if (v === null || v === undefined) continue; if (lo === null || v < lo) { lo = v; li = i; } if (hi === null || v > hi) { hi = v; hiI = i; } }
+            return lo === null ? null : { lo: lo, hi: hi, li: li, hiI: hiI };
+        }
+        function ext(keys) { let lo = Infinity, hi = -Infinity; keys.forEach(k => SER(k).forEach(v => { if (v !== null && v !== undefined) { if (v < lo) lo = v; if (v > hi) hi = v; } })); return lo === Infinity ? [0, 1] : [lo, hi]; }
+        const hhmm = i => D.times[i].substring(11, 16);
+        const tend = (k, h) => { const v = VAL(k); const i = cur - h; if (v === null || !D || i < 0) return null; const b = D.H[k][i]; return (b === null || b === undefined) ? null : v - b; };
+        function isDay() { const a = D && D.H.is_day; if (a && a[cur] !== null && a[cur] !== undefined) return a[cur] === 1; const h = D ? +D.times[cur].substring(11, 13) : 12; return h >= 6 && h < 19; }
+        function footMM(k, d, mul) { const r = dayRange(k); if (!r) return '<div class="d-ft"><span>&nbsp;</span></div>'; const m = mul || 1; return '<div class="d-ft"><span>↓ ' + f1(r.lo * m, d) + ' <i style="opacity:.7">(' + hhmm(r.li) + ')</i></span><span>↑ ' + f1(r.hi * m, d) + ' <i style="opacity:.7">(' + hhmm(r.hiI) + ')</i></span></div>'; }
+        function footTend(k, h, d, mul) { const t = tend(k, h); return t === null ? '' : '<div class="d-ft"><span>تغییر ' + h + ' ساعته</span><span dir="ltr">' + sg(t * (mul || 1), d === undefined ? 1 : d) + '</span></div>'; }
+
+        // ---------- گیج عقربه‌ای ----------
+        function dial(o) {
+            const A0 = -135, A1 = 135, cx = 100, cy = 100, Rr = 80;
+            const ang = v => A0 + (A1 - A0) * clampv((v - o.min) / (o.max - o.min), 0, 1);
+            let s = '<svg viewBox="0 0 200 200" class="gsvg"><circle cx="100" cy="100" r="96" class="g-face"/>';
+            if (o.zones) o.zones.forEach(z => { s += '<path d="' + arcP(cx, cy, Rr, ang(o.min + z[0] * (o.max - o.min)), ang(o.min + z[1] * (o.max - o.min))) + '" fill="none" stroke="' + z[2] + '" stroke-width="7" opacity=".9"/>'; });
+            else s += '<path d="' + arcP(cx, cy, Rr, A0, A1) + '" fill="none" stroke="var(--ring)" stroke-width="5"/>';
+            const eps = (o.max - o.min) * 1e-6;
+            for (let v = o.min; v <= o.max + eps; v += o.minor) {
+                const major = Math.abs(((v - o.min) / o.major) - Math.round((v - o.min) / o.major)) < 1e-6, a = ang(v);
+                const p0 = pt(cx, cy, Rr - 6, a), p1 = pt(cx, cy, Rr - (major ? 17 : 11), a);
+                s += '<line x1="' + p0[0].toFixed(1) + '" y1="' + p0[1].toFixed(1) + '" x2="' + p1[0].toFixed(1) + '" y2="' + p1[1].toFixed(1) + '" stroke="var(--ink)" stroke-width="' + (major ? 1.8 : 0.9) + '" opacity="' + (major ? 1 : 0.55) + '"/>';
+                if (major) { const q = pt(cx, cy, Rr - 29, a); s += '<text x="' + q[0].toFixed(1) + '" y="' + (q[1] + 3.5).toFixed(1) + '" font-size="10" text-anchor="middle" class="t-ink">' + (+v.toFixed(2)) + '</text>'; }
+            }
+            if (o.marks) o.marks.forEach(m => { if (m.v === null || m.v === undefined) return; const a = ang(m.v), p0 = pt(cx, cy, Rr + 3, a), p1 = pt(cx, cy, Rr + 12, a); s += '<line x1="' + p0[0].toFixed(1) + '" y1="' + p0[1].toFixed(1) + '" x2="' + p1[0].toFixed(1) + '" y2="' + p1[1].toFixed(1) + '" stroke="' + m.c + '" stroke-width="3.5" stroke-linecap="round"/>'; });
+            s += '<text x="100" y="138" font-size="11" text-anchor="middle" class="t-mute">' + (o.unit || '') + '</text>';
+            if (o.val !== null && o.val !== undefined) s += '<g transform="rotate(' + ang(o.val).toFixed(1) + ' 100 100)"><path d="M100 26 L105 102 L95 102 Z" fill="var(--needle)"/><path d="M97 100 L103 100 L102 122 L98 122 Z" fill="var(--needle)" opacity=".8"/></g>';
+            s += '<circle cx="100" cy="100" r="7" fill="var(--ink)"/><circle cx="100" cy="100" r="3" fill="var(--needle)"/>';
+            s += '<text x="100" y="170" font-size="21" font-weight="800" text-anchor="middle" class="t-ink">' + f1(o.val, o.dec) + '</text>';
+            return s + '</svg>';
+        }
+        // ---------- دماسنج جیوه‌ای ----------
+        function thermo(v, lo, hi) {
+            const yT = 34, yB = 212, y = x => yB - (x - lo) / (hi - lo) * (yB - yT);
+            let s = '<svg viewBox="0 0 140 280" class="tsvg"><rect x="60" y="' + (yT - 8) + '" width="20" height="' + (yB - yT + 30) + '" rx="10" fill="var(--face)" stroke="var(--ring)" stroke-width="2"/><circle cx="70" cy="236" r="21" fill="var(--face)" stroke="var(--ring)" stroke-width="2"/>';
+            const mn = (hi - lo) > 100 ? 5 : 2;
+            for (let t = Math.ceil(lo / mn) * mn; t <= hi; t += mn) { const maj = t % 10 === 0, yy = y(t).toFixed(1); s += '<line x1="' + (maj ? 44 : 50) + '" y1="' + yy + '" x2="56" y2="' + yy + '" stroke="var(--ink)" stroke-width="' + (maj ? 1.4 : 0.7) + '" opacity="' + (maj ? 1 : 0.5) + '"/>'; if (maj) s += '<text x="40" y="' + (+yy + 3.5) + '" font-size="10" text-anchor="end" class="t-ink">' + t + '</text>'; }
+            for (let F = Math.ceil((lo * 1.8 + 32) / 20) * 20; F <= hi * 1.8 + 32; F += 20) { const yy = y((F - 32) / 1.8).toFixed(1); s += '<line x1="84" y1="' + yy + '" x2="92" y2="' + yy + '" stroke="var(--mute)" stroke-width="1"/><text x="96" y="' + (+yy + 3.5) + '" font-size="9" class="t-mute">' + F + '</text>'; }
+            s += '<text x="40" y="14" font-size="9" text-anchor="end" class="t-mute">°C</text><text x="96" y="14" font-size="9" class="t-mute">°F</text>';
+            if (v !== null && v !== undefined) { const c = rb(v, lo, hi), yy = clampv(y(v), yT - 6, yB); s += '<rect x="66" y="' + yy.toFixed(1) + '" width="8" height="' + (236 - yy).toFixed(1) + '" fill="' + c + '"/><circle cx="70" cy="236" r="15" fill="' + c + '"/><circle cx="64" cy="230" r="4" fill="#fff" opacity=".35"/>'; }
+            return s + '</svg>';
+        }
+        // ---------- قطب‌نمای باد ----------
+        function compass(dr, sp, gu, u) {
+            let s = '<svg viewBox="0 0 220 220" class="gsvg" style="max-width:260px"><circle cx="110" cy="110" r="104" class="g-face"/><circle cx="110" cy="110" r="70" fill="none" stroke="var(--ring)" stroke-width="1"/>';
+            for (let a = 0; a < 360; a += 5) { const maj = a % 30 === 0, p0 = pt(110, 110, 100, a), p1 = pt(110, 110, maj ? 90 : (a % 10 === 0 ? 94 : 97), a); s += '<line x1="' + p0[0].toFixed(1) + '" y1="' + p0[1].toFixed(1) + '" x2="' + p1[0].toFixed(1) + '" y2="' + p1[1].toFixed(1) + '" stroke="var(--ink)" stroke-width="' + (maj ? 1.6 : 0.8) + '" opacity="' + (maj ? 1 : 0.5) + '"/>'; }
+            const lab = { 0: 'N', 90: 'E', 180: 'S', 270: 'W' };
+            for (let a = 0; a < 360; a += 30) { const q = pt(110, 110, 78, a); s += '<text x="' + q[0].toFixed(1) + '" y="' + (q[1] + 4).toFixed(1) + '" font-size="' + (lab[a] ? 14 : 9) + '" font-weight="' + (lab[a] ? 800 : 400) + '" text-anchor="middle" fill="' + (a === 0 ? '#ff6b6b' : 'var(--ink)') + '" opacity="' + (lab[a] ? 1 : 0.7) + '">' + (lab[a] || a) + '</text>'; }
+            if (dr !== null) {
+                const m = pt(110, 110, 104, dr);
+                s += '<g transform="rotate(' + (dr + 180).toFixed(1) + ' 110 110)"><path d="M110 22 L123 76 L110 68 L97 76 Z" fill="var(--acc)" stroke="var(--ink)" stroke-width="1"/><rect x="107.5" y="68" width="5" height="52" fill="var(--acc)" opacity=".85"/></g>';
+                s += '<circle cx="' + m[0].toFixed(1) + '" cy="' + m[1].toFixed(1) + '" r="5" fill="#ff9f43" stroke="#fff" stroke-width="1"/>';
+            }
+            s += '<circle cx="110" cy="110" r="22" fill="var(--glass)" stroke="var(--ring)"/><text x="110" y="108" font-size="14" font-weight="800" text-anchor="middle" class="t-ink">' + (dr === null ? '—' : Math.round(dr) + '°') + '</text><text x="110" y="121" font-size="9" text-anchor="middle" class="t-mute">' + (dr === null ? '' : COMP[Math.round(dr / 22.5) % 16]) + '</text>';
+            return s + '</svg>';
+        }
+        // ---------- بارانسنج استوانه‌ای ----------
+        function rainTube(cum, mx) {
+            const yT = 28, yB = 222, y = v => yB - clampv(v / mx, 0, 1) * (yB - yT);
+            let s = '<svg viewBox="0 0 140 250" class="tsvg"><defs><linearGradient id="dRw" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#2b7bd8"/><stop offset=".5" stop-color="#6cc4ff"/><stop offset="1" stop-color="#2b7bd8"/></linearGradient></defs>';
+            s += '<rect x="42" y="' + yT + '" width="56" height="' + (yB - yT) + '" rx="6" fill="var(--face)" stroke="var(--ring)" stroke-width="2"/>';
+            if (cum > 0) s += '<rect x="44" y="' + y(cum).toFixed(1) + '" width="52" height="' + (yB - y(cum)).toFixed(1) + '" fill="url(#dRw)" opacity=".92"/><ellipse cx="70" cy="' + y(cum).toFixed(1) + '" rx="26" ry="3" fill="#bfe6ff"/>';
+            const stp = mx / 5;
+            for (let i = 0; i <= 5; i++) { const v = i * stp, yy = y(v).toFixed(1); s += '<line x1="98" y1="' + yy + '" x2="108" y2="' + yy + '" stroke="var(--ink)" stroke-width="1.3"/><text x="112" y="' + (+yy + 3.5) + '" font-size="10" class="t-ink">' + (+v.toFixed(1)) + '</text>'; }
+            for (let i = 0; i < 25; i++) { const yy = y(i * mx / 25).toFixed(1); s += '<line x1="98" y1="' + yy + '" x2="103" y2="' + yy + '" stroke="var(--ink)" stroke-width=".6" opacity=".6"/>'; }
+            s += '<text x="112" y="16" font-size="9" class="t-mute">mm</text>';
+            return s + '</svg>';
+        }
+        // ---------- ابر ----------
+        function cloudRGB(v, day) { const sky = day ? [60, 140, 232] : [5, 7, 14], gr = Math.round(255 - clampv(v, 0, 100) / 100 * 125), al = Math.min(1, Math.pow(clampv(v, 0, 100) / 100, 0.75)); return 'rgb(' + [0, 1, 2].map(k => Math.round(sky[k] * (1 - al) + gr * al)).join(',') + ')'; }
+        function cloudDisk(tot, day) {
+            const cx = 70, cy = 70, r = 56, sky = day ? 'rgb(60,140,232)' : 'rgb(5,7,14)', cc = tot === null ? 'rgb(150,150,150)' : cloudRGB(Math.max(tot, 40), day);
+            let s = '<svg viewBox="0 0 140 140" class="tsvg" style="max-width:150px"><circle cx="70" cy="70" r="62" class="g-face"/><circle cx="70" cy="70" r="' + r + '" fill="' + sky + '"/>';
+            if (day) s += '<circle cx="104" cy="34" r="8" fill="#ffd54a" opacity=".9"/>'; else s += '<circle cx="104" cy="34" r="7" fill="#e8ecf5"/><circle cx="108" cy="32" r="6" fill="' + sky + '"/>';
+            if (tot !== null && tot > 0) { if (tot >= 99.5) s += '<circle cx="70" cy="70" r="' + r + '" fill="' + cc + '"/>'; else { const a = tot / 100 * 360, p0 = pt(cx, cy, r, 0), p1 = pt(cx, cy, r, a); s += '<path d="M70 70 L' + p0[0].toFixed(1) + ' ' + p0[1].toFixed(1) + ' A' + r + ' ' + r + ' 0 ' + (a > 180 ? 1 : 0) + ' 1 ' + p1[0].toFixed(1) + ' ' + p1[1].toFixed(1) + ' Z" fill="' + cc + '"/>'; } }
+            s += '<circle cx="70" cy="70" r="' + r + '" fill="none" stroke="var(--ring)" stroke-width="1.5"/>';
+            return s + '</svg>';
+        }
+        function layerBars(day) {
+            return [['بالا', 'cloud_cover_high'], ['میانی', 'cloud_cover_mid'], ['پایین', 'cloud_cover_low']].map(r => { const v = VAL(r[1]); return '<div class="sm-row"><span style="min-width:34px">' + r[0] + '</span><div class="bar"><i style="width:' + (v === null ? 0 : v) + '%;background:' + (v === null ? 'transparent' : cloudRGB(Math.max(v, 30), day)) + '"></i></div><em>' + f1(v, 0) + '%</em></div>'; }).join('');
+        }
+        function wxInfo(c, day) {
+            if (c === null) return ['—', '—'];
+            if (c === 0) return [day ? '☀️' : '🌙', 'صاف']; if (c === 1) return [day ? '🌤️' : '🌙', 'عمدتاً صاف']; if (c === 2) return [day ? '⛅' : '☁️', 'نیمه‌ابری']; if (c === 3) return ['☁️', 'ابری'];
+            if (c === 45 || c === 48) return ['🌫️', 'مه']; if (c >= 51 && c <= 57) return ['🌦️', 'نم‌نم/ریزش']; if (c >= 61 && c <= 67) return ['🌧️', 'باران'];
+            if (c >= 71 && c <= 77) return ['🌨️', 'برف']; if (c >= 80 && c <= 82) return ['🌦️', 'رگبار']; if (c === 85 || c === 86) return ['🌨️', 'رگبار برف']; if (c >= 95) return ['⛈️', 'رعدوبرق'];
+            return ['🌡️', 'کد ' + c];
+        }
+        const tile = (val, lab, col) => '<div class="mt"><b' + (col ? ' style="color:' + col + '"' : '') + '>' + val + '</b><span>' + lab + '</span></div>';
+
+        // ---------- رندر کارت‌ها ----------
+        function tscale() {
+            if (D && D.tsc) return D.tsc;
+            const e = ext(['temperature_2m', 'dew_point_2m', 'apparent_temperature', 'wet_bulb_temperature_2m', 'soil_temperature_0cm', 'soil_temperature_6cm', 'soil_temperature_18cm', 'soil_temperature_54cm']);
+            const sc = [Math.min(-20, Math.floor((e[0] - 3) / 10) * 10), Math.max(60, Math.ceil((e[1] + 3) / 10) * 10)];
+            if (D) D.tsc = sc; return sc;
+        }
+        function rThermo(k, d) {
+            const v = VAL(k), sc = tscale(), c = v === null ? 'var(--mute)' : rb(v, sc[0], sc[1]);
+            return '<div class="dv" style="color:' + c + '">' + f1(v, d) + '<small> °C</small></div>' + thermo(v, sc[0], sc[1]) + footMM(k, 1) + footTend(k, 3, 1);
+        }
+        function rDial(k, o, mul, fdec) {
+            const v = VAL(k); const x = v === null ? null : v * (mul || 1);
+            o.val = x; o.dec = fdec === undefined ? 0 : fdec; return dial(o) + footMM(k, fdec === undefined ? 0 : fdec, mul) + footTend(k, 3, fdec === undefined ? 0 : fdec, mul);
+        }
+        function presRange(k) { const e = ext([k]); let lo = Math.floor((e[0] - 5) / 10) * 10, hi = Math.ceil((e[1] + 5) / 10) * 10; if (hi - lo < 40) { const c = (hi + lo) / 2; lo = Math.floor((c - 20) / 10) * 10; hi = lo + 40; } return [lo, hi]; }
+        function rPres(k) { const r = presRange(k), span = r[1] - r[0]; return rDial(k, { min: r[0], max: r[1], major: span > 80 ? 20 : 10, minor: span > 80 ? 5 : 2, unit: 'hPa', zones: [[0, 0.33, '#6366f1'], [0.33, 0.66, '#22d3ee'], [0.66, 1, '#f59e0b']] }, 1, 1); }
+        function rWspd() {
+            const U = wu(), e = ext(['wind_speed_10m', 'wind_gusts_10m']); let tier = U.tiers[U.tiers.length - 1]; for (let i = 0; i < U.tiers.length; i++) { if (e[1] * U.f * 1.05 <= U.tiers[i]) { tier = U.tiers[i]; break; } }
+            const mj = tier / 5 >= 1 ? tier / 5 : 1;
+            const v = VAL('wind_speed_10m'), g = VAL('wind_gusts_10m');
+            return dial({ min: 0, max: tier, major: mj, minor: mj / 2, unit: U.u, val: v === null ? null : v * U.f, dec: 1, zones: [[0, 0.4, '#34d399'], [0.4, 0.7, '#fbbf24'], [0.7, 1, '#f87171']], marks: [{ v: g === null ? null : g * U.f, c: '#ff9f43' }] }) +
+                '<div class="d-ft"><span>تندباد: <b dir="ltr">' + f1(g === null ? null : g * U.f, 1) + '</b> ' + U.u + '</span><span>↑ ' + f1((dayRange('wind_speed_10m') || { hi: null }).hi === null ? null : dayRange('wind_speed_10m').hi * U.f, 1) + '</span></div>' + footTend('wind_speed_10m', 3, 1, U.f);
+        }
+        function rCompass() {
+            const dr = VAL('wind_direction_10m'), sp = VAL('wind_speed_10m'), U = wu();
+            return compass(dr, sp) + '<div class="dv">' + f1(sp === null ? null : sp * U.f, 1) + '<small> ' + U.u + '</small></div><div class="d-ft"><span>از سمت: <b>' + (dr === null ? '—' : COMP[Math.round(dr / 22.5) % 16] + ' (' + Math.round(dr) + '°)') + '</b></span><span>پیکان = جهت وزش</span></div>';
+        }
+        function rainDayCum() {
+            if (!D) return { cum: 0, h: null, h24: null };
+            const P = SER('precipitation'), d = dayOf(cur); let cum = 0, h24 = 0;
+            for (let i = 0; i <= cur; i++) { const v = P[i]; if (v === null || v === undefined) continue; if (dayOf(i) === d) cum += v; if (i > cur - 24) h24 += v; }
+            return { cum: cum, h: VAL('precipitation'), h24: h24 };
+        }
+        function rRain() {
+            const P = SER('precipitation'), per = {}; P.forEach((v, i) => { if (v !== null && v !== undefined && D) { const d = dayOf(i); per[d] = (per[d] || 0) + v; } });
+            const gm = Math.max.apply(null, Object.keys(per).map(k => per[k]).concat([0])); const tiers = [2, 5, 10, 20, 50, 100, 200]; let mx = 200; for (let i = 0; i < tiers.length; i++) { if (gm * 1.1 <= tiers[i]) { mx = tiers[i]; break; } }
+            const r = rainDayCum(), pp = VAL('precipitation_probability'), sn = VAL('snowfall');
+            return '<div class="dv" style="color:#6cc4ff">' + f1(r.cum, 1) + '<small> mm (تجمعی امروز)</small></div>' + rainTube(r.cum, mx) +
+                '<div class="d-ft"><span>این ساعت: <b dir="ltr">' + f1(r.h, 1) + '</b> mm</span><span>۲۴ ساعت: <b dir="ltr">' + f1(r.h24, 1) + '</b></span></div><div class="d-ft"><span>احتمال: ' + f1(pp, 0) + '٪</span><span>برف: ' + f1(sn, 1) + ' cm</span></div>';
+        }
+        function rCloud() {
+            const t = VAL('cloud_cover'), day = isDay();
+            return '<div class="dv">' + f1(t, 0) + '<small>٪ — ' + (t === null ? '—' : Math.round(t / 12.5) + ' اکتا') + '</small></div>' + cloudDisk(t, day) + layerBars(day);
+        }
+        function rVis() {
+            const v = VAL('visibility'), km = v === null ? null : v / 1000, pc = km === null ? 0 : clampv(km / 20 * 100, 0, 100);
+            const c = km === null ? 'var(--mute)' : (km < 1 ? '#f87171' : km < 4 ? '#fbbf24' : km < 10 ? '#a3e635' : '#34d399');
+            return '<div class="dv" style="color:' + c + '">' + (km === null ? '—' : (km >= 50 ? '≥50' : km.toFixed(1))) + '<small> km</small></div><div class="bar" style="height:18px"><i style="width:' + pc + '%;background:' + c + '"></i></div><div class="d-ft" dir="ltr"><span>0</span><span>5</span><span>10</span><span>20+ km</span></div>' + footMM('visibility', 1, 0.001);
+        }
+        function rCape() {
+            const e = ext(['cape']), tiers = [1000, 2000, 4000, 6000]; let mx = 6000; for (let i = 0; i < tiers.length; i++) { if (e[1] * 1.05 <= tiers[i]) { mx = tiers[i]; break; } }
+            const fz = VAL('freezing_level_height');
+            return rDial('cape', { min: 0, max: mx, major: mx / 5, minor: mx / 10, unit: 'J/kg', zones: [[0, 0.25, '#34d399'], [0.25, 0.5, '#fbbf24'], [0.5, 0.75, '#f97316'], [0.75, 1, '#ef4444']] }, 1, 0) + '<div class="d-ft"><span>تراز صفر درجه: <b dir="ltr">' + f1(fz, 0) + '</b> m</span></div>';
+        }
+        function rRad() {
+            const e = ext(['shortwave_radiation']); const mx = e[1] > 1200 ? 1500 : 1200;
+            return rDial('shortwave_radiation', { min: 0, max: mx, major: mx / 6, minor: mx / 12, unit: 'W/m²', zones: [[0, 0.2, '#334155'], [0.2, 0.5, '#facc15'], [0.5, 0.8, '#fb923c'], [0.8, 1, '#ef4444']] }, 1, 0) +
+                '<div class="d-ft"><span>مستقیم: ' + f1(VAL('direct_radiation'), 0) + '</span><span>پراکنده: ' + f1(VAL('diffuse_radiation'), 0) + '</span><span>DNI: ' + f1(VAL('direct_normal_irradiance'), 0) + '</span></div>';
+        }
+        function rUV() { return rDial('uv_index', { min: 0, max: 12, major: 2, minor: 1, unit: 'UV index', zones: [[0, 0.25, '#34d399'], [0.25, 0.5, '#facc15'], [0.5, 0.667, '#fb923c'], [0.667, 0.917, '#ef4444'], [0.917, 1, '#a855f7']] }, 1, 1); }
+        function rRH() { return rDial('relative_humidity_2m', { min: 0, max: 100, major: 20, minor: 5, unit: '% RH', zones: [[0, 0.3, '#f87171'], [0.3, 0.6, '#fbbf24'], [0.6, 1, '#38bdf8']] }, 1, 0) + '<div class="d-ft"><span>VPD: ' + f1(VAL('vapour_pressure_deficit'), 2) + ' kPa</span></div>'; }
+        function rMisc() {
+            const sun = VAL('sunshine_duration');
+            return '<div class="mt-wrap">' + tile(f1(VAL('et0_fao_evapotranspiration'), 2), 'تبخیر-تعرق ET₀ (mm/h)', '#34d399') + tile(f1(sun === null ? null : sun / 60, 0), 'آفتاب (دقیقه در ساعت)', '#facc15') + tile(f1(VAL('apparent_temperature'), 1) + '°', 'دمای احساسی', '') +
+                tile(f1(VAL('precipitation_probability'), 0) + '٪', 'احتمال بارش', '#6cc4ff') + tile(f1(VAL('surface_pressure'), 1), 'فشار محلی (hPa)', '') + tile(f1(VAL('pressure_msl'), 1), 'فشار تراز دریا (hPa)', '') + '</div>';
+        }
+        function rSoilM() {
+            const L = [['soil_moisture_0_to_1cm', '۰–۱ cm'], ['soil_moisture_1_to_3cm', '۱–۳ cm'], ['soil_moisture_3_to_9cm', '۳–۹ cm'], ['soil_moisture_9_to_27cm', '۹–۲۷ cm'], ['soil_moisture_27_to_81cm', '۲۷–۸۱ cm']];
+            return L.map(r => { const v = VAL(r[0]), p = v === null ? null : v * 100; return '<div class="sm-row"><span style="min-width:52px">' + r[1] + '</span><div class="bar"><i style="width:' + (p === null ? 0 : clampv(p / 50 * 100, 0, 100)) + '%;background:linear-gradient(90deg,#b45309,#38bdf8)"></i></div><em>' + f1(p, 1) + '٪</em></div>'; }).join('') + '<div class="d-ft"><span>رطوبت حجمی خاک (نوار = ۰ تا ۵۰٪)</span></div>';
+        }
+        function rWindLev() {
+            const U = wu(), L = [[10, 'wind_speed_10m', 'wind_direction_10m'], [80, 'wind_speed_80m', 'wind_direction_80m'], [120, 'wind_speed_120m', 'wind_direction_120m'], [180, 'wind_speed_180m', 'wind_direction_180m']];
+            let s = '<div style="display:flex;gap:6px;justify-content:space-around;flex-wrap:wrap">';
+            L.forEach(l => { const sp = VAL(l[1]), dr = VAL(l[2]); s += '<div style="width:64px"><svg viewBox="0 0 64 64" style="width:64px;height:64px;direction:ltr"><circle cx="32" cy="32" r="29" class="g-face"/><text x="32" y="10" font-size="7" text-anchor="middle" class="t-mute">N</text>' + (dr === null ? '' : '<g transform="rotate(' + (dr + 180) + ' 32 32)"><path d="M32 8 L40 36 L32 31 L24 36 Z" fill="var(--acc)"/><line x1="32" y1="31" x2="32" y2="54" stroke="var(--acc)" stroke-width="2"/></g>') + '</svg><div style="font-size:.7rem"><b dir="ltr">' + f1(sp === null ? null : sp * U.f, 1) + '</b> ' + U.u + '<br><span style="color:var(--mute)">' + l[0] + ' m</span></div></div>'; });
+            return s + '</div>';
+        }
+        function rPlev() {
+            const U = wu(), rows = [['850', 'temperature_850hPa', 'relative_humidity_850hPa', 'wind_speed_850hPa'], ['700', 'temperature_700hPa', 'relative_humidity_700hPa', 'wind_speed_700hPa'], ['500', 'temperature_500hPa', 'relative_humidity_500hPa', 'wind_speed_500hPa'], ['250', null, null, 'wind_speed_250hPa']];
+            let s = '<table class="pl"><tr><th>hPa</th><th>T °C</th><th>RH %</th><th>باد ' + U.u + '</th></tr>';
+            rows.forEach(r => { const t = r[1] ? VAL(r[1]) : null, rh = r[2] ? VAL(r[2]) : null, w = VAL(r[3]); s += '<tr><td><b>' + r[0] + '</b></td><td style="color:' + (t === null ? 'inherit' : rb(t, -60, 40)) + '">' + f1(t, 1) + '</td><td>' + f1(rh, 0) + '</td><td>' + f1(w === null ? null : w * U.f, 1) + '</td></tr>'; });
+            return s + '</table><div class="d-ft"><span>ارتفاع ژئوپتانسیل ۵۰۰ hPa: <b dir="ltr">' + f1(VAL('geopotential_height_500hPa'), 0) + '</b> m</span></div>';
+        }
+        function rPbl() { return '<div class="mt-wrap">' + tile(f1(VAL('boundary_layer_height'), 0), 'لایهٔ مرزی (m)', '#a78bfa') + tile(f1(VAL('lifted_index'), 1), 'شاخص بالابری LI', '#fb923c') + tile(f1(VAL('convective_inhibition'), 0), 'CIN (J/kg)', '#94a3b8') + '</div>'; }
+
+        const CARDS = [
+            { id: 'compass', t: 'جهت باد', e: 'Wind Direction', cls: 'w2', on: 1, r: rCompass },
+            { id: 'wspd', t: 'سرعت باد', e: 'Wind Speed', cls: 'w2', on: 1, r: rWspd },
+            { id: 'rain', t: 'بارش', e: 'Rain', cls: '', on: 1, r: rRain },
+            { id: 'temp', t: 'دمای هوا ۲m', e: 'Air Temperature', on: 1, r: () => rThermo('temperature_2m') },
+            { id: 'dew', t: 'نقطه شبنم', e: 'Dew Point', on: 1, r: () => rThermo('dew_point_2m') },
+            { id: 'app', t: 'دمای احساسی', e: 'Apparent Temp', on: 1, r: () => rThermo('apparent_temperature') },
+            { id: 'wet', t: 'دمای مرطوب', e: 'Wet Bulb', on: 1, r: () => rThermo('wet_bulb_temperature_2m') },
+            { id: 's0', t: 'دمای سطح خاک ۰cm', e: 'Soil Temp 0 cm', on: 1, r: () => rThermo('soil_temperature_0cm') },
+            { id: 's6', t: 'دمای خاک ۶cm', e: 'Soil Temp 6 cm', on: 1, r: () => rThermo('soil_temperature_6cm') },
+            { id: 's18', t: 'دمای خاک ۱۸cm', e: 'Soil Temp 18 cm', on: 1, r: () => rThermo('soil_temperature_18cm') },
+            { id: 's54', t: 'دمای خاک ۵۴cm', e: 'Soil Temp 54 cm', on: 1, r: () => rThermo('soil_temperature_54cm') },
+            { id: 'rh', t: 'رطوبت نسبی', e: 'Rel. Humidity', cls: 'w2', on: 1, r: rRH },
+            { id: 'presL', t: 'فشار هوا (محلی/ایستگاه)', e: 'Station Pressure', cls: 'w2', on: 1, r: () => rPres('surface_pressure') },
+            { id: 'presM', t: 'فشار تراز دریا', e: 'Sea-level Pressure', cls: 'w2', on: 1, r: () => rPres('pressure_msl') },
+            { id: 'rad', t: 'تابش خورشید', e: 'Global Radiation', cls: 'w2', on: 1, r: rRad },
+            { id: 'uv', t: 'شاخص فرابنفش', e: 'UV Index', cls: 'w2', on: 1, r: rUV },
+            { id: 'cloud', t: 'پوشش ابر', e: 'Cloud Cover', cls: 'w2', on: 1, r: rCloud },
+            { id: 'vis', t: 'دید افقی', e: 'Visibility', cls: 'w2', on: 1, r: rVis },
+            { id: 'cape', t: 'ناپایداری CAPE', e: 'CAPE', cls: 'w2', on: 1, r: rCape },
+            { id: 'misc', t: 'سایر', e: 'Other', cls: 'w2', on: 1, r: rMisc },
+            { id: 'soilm', t: 'رطوبت خاک', e: 'Soil Moisture', cls: 'w2', on: 0, g: 'soilm', r: rSoilM },
+            { id: 'windlev', t: 'باد در ارتفاع', e: 'Wind aloft', cls: 'w2', on: 0, g: 'windlev', r: rWindLev },
+            { id: 'plev', t: 'ترازهای فشاری', e: 'Pressure levels', cls: 'w2', on: 0, g: 'plev', r: rPlev },
+            { id: 'pbl', t: 'لایهٔ مرزی، LI و CIN', e: 'PBL / LI / CIN', cls: 'w2', on: 0, g: 'pbl', r: rPbl }
+        ];
+        const CATS = [['wind', '💨 باد', ['compass', 'wspd', 'windlev']], ['temp', '🌡️ دما', ['temp', 'dew', 'app', 'wet', 's0', 's6', 's18', 's54']], ['ph', '💧 رطوبت و فشار', ['rh', 'presL', 'presM', 'soilm']], ['rc', '🌧️ بارش و ابر', ['rain', 'cloud', 'vis']], ['rad', '☀️ تابش و ناپایداری', ['rad', 'uv', 'cape', 'pbl', 'plev']], ['misc', '📋 سایر', ['misc']]];
+        const closedCat = {};
+        function buildGrid() {
+            const html = CATS.map(ct => {
+                const cs = CARDS.filter(c => c.on && ct[2].indexOf(c.id) >= 0); if (!cs.length) return '';
+                return '<section class="d-cat' + (closedCat[ct[0]] ? ' closed' : '') + '" id="dcat_' + ct[0] + '"><div class="d-cat-h" data-cat="' + ct[0] + '"><span>' + ct[1] + ' <small>(' + cs.length + ')</small></span><span class="ar"><button type="button" data-sc="1" title="به راست">▶</button><button type="button" data-sc="-1" title="به چپ">◀</button></span></div><div class="d-row" id="drow_' + ct[0] + '">' +
+                    cs.map(c => '<div class="d-card ' + (c.cls || '') + '" id="dc_' + c.id + '"><div class="d-ct">' + c.t + '<small>' + c.e + '</small></div><div class="d-cb"></div></div>').join('') + '</div></section>';
+            }).join('');
+            $('dGrid').innerHTML = html;
+            $('dGrid').querySelectorAll('.d-cat-h').forEach(h => h.addEventListener('click', ev => {
+                const b = ev.target.closest('button[data-sc]'), cat = h.getAttribute('data-cat'), row = $('drow_' + cat);
+                if (b) { row.scrollBy({ left: (+b.getAttribute('data-sc')) * 300, behavior: 'smooth' }); return; }
+                closedCat[cat] = !closedCat[cat]; $('dcat_' + cat).classList.toggle('closed', !!closedCat[cat]);
+            }));
+            $('dGrid').querySelectorAll('.d-row').forEach(row => {
+                let down = false, sx = 0, sl = 0, moved = false;
+                row.addEventListener('pointerdown', ev => { if (ev.pointerType !== 'mouse') return; down = true; moved = false; sx = ev.clientX; sl = row.scrollLeft; });
+                window.addEventListener('pointermove', ev => { if (!down) return; const dx = ev.clientX - sx; if (Math.abs(dx) > 4) moved = true; if (moved) row.scrollLeft = sl - dx; });
+                window.addEventListener('pointerup', () => { down = false; });
+            });
+        }
+        function buildChips() {
+            $('dChips').innerHTML = CARDS.map(c => '<label><input type="checkbox" data-c="' + c.id + '"' + (c.on ? ' checked' : '') + '> ' + c.t + (c.g ? ' <i style="color:var(--acc)">(دریافت جدا)</i>' : '') + '</label>').join('');
+            $('dChips').querySelectorAll('input').forEach(ch => ch.addEventListener('change', () => { CARDS.filter(c => c.id === ch.getAttribute('data-c'))[0].on = ch.checked ? 1 : 0; buildGrid(); renderAll(); ensureGroups(); }));
+        }
+        function renderCards() { CARDS.forEach(c => { if (!c.on) return; const el = $('dc_' + c.id); if (el) el.querySelector('.d-cb').innerHTML = c.r(); }); }
+
+        // ---------- پنل زمان، نوار زمانی و اسلایدر ----------
+        function updateTime() {
+            if (!D) { $('dClock').textContent = '--:--'; $('dDate').textContent = '—'; $('dInfo').innerHTML = 'داده‌ای دریافت نشده است'; $('dWx').innerHTML = '—<small>—</small>'; $('dPos').textContent = ''; return; }
+            const t = D.times[cur], d = t.substring(0, 10);
+            $('dClock').textContent = t.substring(11, 16);
+            $('dDate').innerHTML = toPersianWeekday(d) + ' ' + toPersianDate(d) + ' <span style="color:var(--mute);font-weight:400;font-size:.78rem" dir="ltr">(' + d + ')</span>' + (isHoliday(d) ? ' <span style="color:#f87171;font-size:.75rem">تعطیل</span>' : '');
+            const dh = cur - D.nowI, rel = dh === 0 ? 'اکنون' : (dh > 0 ? dh + ' ساعت بعد از اکنون' : (-dh) + ' ساعت قبل از اکنون');
+            $('dInfo').innerHTML = '<b>' + (stLabels[D.st] || D.st) + '</b> — ' + (mdLabels[D.md] || D.md) + '<br>ارتفاع ایستگاه ≈ ' + Math.round(D.elev) + ' m — ' + rel + '<br>' + (cur + 1) + ' از ' + D.times.length + ' ساعت';
+            const w = wxInfo(VAL('weather_code'), isDay()); $('dWx').innerHTML = w[0] + '<small>' + w[1] + '</small>';
+            $('dPos').textContent = '';
+            $('dSlider').value = cur;
+            updateDays(); updateCursor();
+        }
+        function buildStrip() {
+            const n = D.times.length, sv = $('dStrip'), X = i => i / (n - 1) * 1000;
+            const T = SER('temperature_2m'), P = SER('precipitation'), e = ext(['temperature_2m']), lo = e[0] - 1, hi = e[1] + 1;
+            const Y = v => 58 - (v - lo) / (hi - lo) * 50;
+            let s = '', cw = 1000 / Math.max(1, n - 1);
+            for (let i = 0; i < n; i++) { const dy = D.H.is_day ? D.H.is_day[i] === 1 : (+D.times[i].substring(11, 13) >= 6 && +D.times[i].substring(11, 13) < 19); if (!dy) s += '<rect x="' + (X(i) - cw / 2).toFixed(1) + '" y="0" width="' + (cw + 0.5).toFixed(1) + '" height="64" fill="#000" opacity=".28"/>'; if (D.times[i].substring(11, 13) === '00') s += '<line x1="' + X(i).toFixed(1) + '" y1="0" x2="' + X(i).toFixed(1) + '" y2="64" stroke="#888" stroke-width="1" vector-effect="non-scaling-stroke" opacity=".6"/>'; }
+            const pm = Math.max(1, Math.max.apply(null, P.map(v => v || 0)));
+            P.forEach((v, i) => { if (v > 0) s += '<rect x="' + (X(i) - cw / 2).toFixed(1) + '" y="' + (64 - v / pm * 26).toFixed(1) + '" width="' + (cw + 0.3).toFixed(1) + '" height="' + (v / pm * 26).toFixed(1) + '" fill="#38bdf8" opacity=".8"/>'; });
+            let d = '', pen = false; T.forEach((v, i) => { if (v === null || v === undefined) { pen = false; return; } d += (pen ? 'L' : 'M') + X(i).toFixed(1) + ' ' + Y(v).toFixed(1); pen = true; });
+            s += '<path d="' + d + '" fill="none" stroke="#fb923c" stroke-width="2" vector-effect="non-scaling-stroke"/>';
+            s += '<line id="dCur" x1="0" y1="0" x2="0" y2="64" stroke="#fff" stroke-width="2" vector-effect="non-scaling-stroke"/>';
+            sv.innerHTML = s;
+        }
+        function updateCursor() { const l = $('dCur'); if (!l || !D) return; const x = cur / Math.max(1, D.times.length - 1) * 1000; l.setAttribute('x1', x); l.setAttribute('x2', x); }
+        function updateDays() {
+            if (!D) { $('dDays').innerHTML = ''; return; }
+            const n = D.times.length, days = {}, cd = dayOf(cur); D.times.forEach((t, i) => { const d = t.substring(0, 10); if (!days[d]) days[d] = [i, i]; else days[d][1] = i; });
+            const keys = Object.keys(days), skip = keys.length > 12 ? 2 : 1;
+            $('dDays').innerHTML = keys.map((d, ix) => { if (ix % skip) return ''; const r = days[d], mid = (r[0] + r[1]) / 2; return '<span class="' + (d === cd ? 'cd' : '') + '" style="left:' + (mid / Math.max(1, n - 1) * 100).toFixed(2) + '%">' + toPersianWeekday(d) + '<br>' + toPersianDate(d).slice(5) + '</span>'; }).join('');
+        }
+        function renderAll() { updateTime(); renderCards(); }
+        function requestRender() { if (rafPending) return; rafPending = true; (window.requestAnimationFrame || (f => setTimeout(f, 16)))(() => { rafPending = false; renderAll(); }); }
+        function setCur(i) { if (!D) return; cur = clampv(Math.round(i), 0, D.times.length - 1); requestRender(); }
+
+        // ---------- دریافت ----------
+        async function jget(url, ms) {
+            const ctl = new AbortController(); const tm = setTimeout(() => ctl.abort(), ms);
+            try { const r = await fetch(url, { signal: ctl.signal }); if (!r.ok) { let reason = ''; try { const j = await r.json(); reason = (j && j.reason) ? j.reason : ''; } catch (e) {} throw new Error('HTTP ' + r.status + (reason ? ' — ' + reason : '')); } return await r.json(); } finally { clearTimeout(tm); }
+        }
+        async function dFetch(stv, model, past, vars0, onlyDi) {
+            const ll = stv.split(','), days = [forecastDaysFor(model), legacyDaysFor(model)]; let vars = vars0.slice(), removed = [], j = null, err = null, used = 0;
+            const first = onlyDi === undefined ? 0 : onlyDi, last = onlyDi === undefined ? days.length - 1 : onlyDi;
+            outer: for (let di = first; di <= last; di++) {
+                for (let k = 0; k < 30; k++) {
+                    if (!vars.length) break outer;
+                    const url = 'https://api.open-meteo.com/v1/forecast?latitude=' + ll[0] + '&longitude=' + ll[1] + '&hourly=' + vars.join(',') + '&models=' + model + '&timezone=auto&forecast_days=' + days[di] + '&past_days=' + past;
+                    try { j = await jget(url, 60000); used = di; break outer; }
+                    catch (e) { err = e; const m = /invalid String value (\S+) for key hourly/.exec(e.message || ''); if (m) { const bad = m[1], b4 = vars.length; vars = vars.filter(v => v !== bad); if (vars.length < b4) { removed.push(bad); continue; } } break; }
+                }
+            }
+            return { j: j, removed: removed, err: err, di: used };
+        }
+        function nowIndex(times, off) {
+            const iso = new Date(Date.now() + off * 1000).toISOString().substring(0, 13) + ':00'; const i = times.indexOf(iso);
+            if (i >= 0) return i; return iso < times[0] ? 0 : times.length - 1;
+        }
+        async function load() {
+            const my = ++seq, stv = $('dSt').value, md = $('dMd').value, past = +$('dPast').value, key = stv + '|' + md + '|' + past;
+            if (store[key]) { D = store[key]; cur = D.nowI; afterLoad(); return; }
+            $('dStatus').textContent = 'در حال دریافت داده از Open-Meteo...';
+            const r = await dFetch(stv, md, past, BASE);
+            if (my !== seq) return;
+            if (!r.j || !r.j.hourly || !(r.j.hourly.time || []).length) { $('dStatus').textContent = 'دریافت ناموفق بود: ' + (r.err ? r.err.message : 'داده‌ای نیامد'); return; }
+            const H = r.j.hourly, off = r.j.utc_offset_seconds || 0;
+            D = { st: stv, md: md, past: past, times: H.time, H: H, off: off, elev: typeof r.j.elevation === 'number' ? r.j.elevation : 0, di: r.di, removed: r.removed, loaded: {}, busy: false, nowI: nowIndex(H.time, off) };
+            store[key] = D; cur = D.nowI; afterLoad();
+        }
+        function afterLoad() {
+            const sl = $('dSlider'); sl.max = D.times.length - 1; sl.value = cur; sl.disabled = false;
+            buildStrip(); renderAll();
+            $('dSub').textContent = (stLabels[D.st] || '') + ' — ' + (mdLabels[D.md] || D.md);
+            $('dStatus').textContent = D.removed.length ? 'این متغیرها را مدل/سرور نپذیرفت: ' + D.removed.join('، ') : '';
+            ensureGroups();
+        }
+        function ensureGroups() {
+            if (!D || D.busy) return;
+            const miss = CARDS.filter(c => c.on && c.g && !D.loaded[c.g]); if (!miss.length) return;
+            const vars = []; miss.forEach(c => { D.loaded[c.g] = true; GROUPS[c.g].forEach(v => { if (!(v in D.H) && vars.indexOf(v) < 0) vars.push(v); }); });
+            if (!vars.length) { renderAll(); return; }
+            const d0 = D; d0.busy = true; $('dStatus').textContent = 'در حال دریافت گروه افزوده (' + vars.length + ' متغیر)...';
+            dFetch(d0.st, d0.md, d0.past, vars, d0.di).then(r => {
+                d0.busy = false;
+                if (r.j && r.j.hourly) Object.keys(r.j.hourly).forEach(k => { if (k !== 'time') d0.H[k] = r.j.hourly[k]; });
+                r.removed.forEach(x => d0.removed.push(x)); if (!r.j && r.err) d0.removed.push('خطا: ' + r.err.message);
+                if (D === d0) { $('dStatus').textContent = d0.removed.length ? 'این متغیرها را مدل/سرور نپذیرفت: ' + d0.removed.join('، ') : ''; renderAll(); ensureGroups(); }
+            });
+        }
+        function schedule() {
+            const key = $('dSt').value + '|' + $('dMd').value + '|' + $('dPast').value;
+            clearTimeout(loadTimer); stopPlay();
+            if (store[key]) { D = store[key]; cur = D.nowI; afterLoad(); return; }
+            D = null; $('dSlider').disabled = true; $('dStrip').innerHTML = ''; renderAll();
+            $('dStatus').textContent = '⏳ ۱ ثانیه پس از آخرین انتخاب، داده از API دریافت می‌شود...';
+            loadTimer = setTimeout(load, 1000);
+        }
+
+        // ---------- رویدادها ----------
+        function stopPlay() { if (playT) { clearInterval(playT); playT = null; } $('dPlay').textContent = '▶ پخش'; }
+        function togglePlay() { if (!D) return; if (playT) { stopPlay(); return; } $('dPlay').textContent = '⏸ توقف'; playT = setInterval(() => { if (cur >= D.times.length - 1) { stopPlay(); return; } setCur(cur + 1); }, 650); }
+        $('dSt').innerHTML = citySelect.innerHTML; $('dSt').value = citySelect.value;
+        $('dMd').innerHTML = modelSelect.innerHTML; $('dMd').value = modelSelect.value;
+        $('dSt').addEventListener('change', () => { citySelect.value = $('dSt').value; schedule(); });
+        $('dMd').addEventListener('change', () => { modelSelect.value = $('dMd').value; schedule(); });
+        $('dPast').addEventListener('change', schedule);
+        $('dWu').addEventListener('change', renderAll);
+        $('dGo').addEventListener('click', () => { clearTimeout(loadTimer); load(); });
+        $('dTheme').addEventListener('click', () => { window.__yzSetTheme(R.classList.contains('light') ? 'night' : 'day'); });
+        $('dSlider').addEventListener('input', function () { setCur(+this.value); });
+        [['dB24', -24], ['dB6', -6], ['dB1', -1], ['dF1', 1], ['dF6', 6], ['dF24', 24]].forEach(b => $(b[0]).addEventListener('click', () => { if (D) setCur(cur + b[1]); }));
+        $('dNow').addEventListener('click', () => { if (D) setCur(D.nowI); });
+        $('dPlay').addEventListener('click', togglePlay);
+        $('dStrip').addEventListener('click', ev => { if (!D) return; const r = $('dStrip').getBoundingClientRect(); setCur((ev.clientX - r.left) / r.width * (D.times.length - 1)); });
+        document.addEventListener('keydown', ev => { if (!D || /^(INPUT|SELECT|TEXTAREA)$/.test((ev.target.tagName || '')) && ev.target.type !== 'range') return; if (ev.key === 'ArrowLeft') { setCur(cur - (ev.shiftKey ? 24 : 1)); ev.preventDefault(); } else if (ev.key === 'ArrowRight') { setCur(cur + (ev.shiftKey ? 24 : 1)); ev.preventDefault(); } });
+
+        // ---------- دکمه‌ها: جدول تبدیل + میانبر به همهٔ پنجره‌های قبلی ----------
+        const bw = $('dBtns');
+        const tb = document.createElement('button'); tb.type = 'button'; tb.className = 'd-btn pri'; tb.innerHTML = '📋 جدول تبدیل';
+        tb.addEventListener('click', () => { const w = window.open(location.href.split('#')[0] + '#table=' + encodeURIComponent($('dSt').value + ';' + $('dMd').value), '_blank'); if (!w) alert('اجازهٔ باز شدن پنجرهٔ جدید داده نشد (مسدودکنندهٔ پاپ‌آپ).'); });
+        bw.appendChild(tb);
+        document.querySelectorAll('.main-header h4 button').forEach(ob => { const nb = document.createElement('button'); nb.type = 'button'; nb.className = 'd-btn'; nb.innerHTML = ob.innerHTML; nb.addEventListener('click', () => { citySelect.value = $('dSt').value; modelSelect.value = $('dMd').value; ob.click(); }); bw.appendChild(nb); });
+
+        window.__yzDashRefresh = () => { const v = $('dSt').value; $('dSt').innerHTML = citySelect.innerHTML; if (Array.prototype.some.call($('dSt').options, o => o.value === v)) $('dSt').value = v; };
+        buildChips(); buildGrid(); renderAll();
+        $('dStatus').textContent = 'بارگیری خودکار غیرفعال است: ایستگاه یا مدل را انتخاب کنید (۱ ثانیه بعد دریافت می‌شود) یا «دریافت با انتخاب فعلی» را بزنید.';
+    })();
 
 
     // --- پنجرهٔ «دمای واقعی زمین» — دادهٔ ساعتی TS از NASA POWER، ۴۸ تا ۱ ساعت گذشته، همهٔ ایستگاه‌ها ---
